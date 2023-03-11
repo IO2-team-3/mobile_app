@@ -29,5 +29,5 @@ jobs:
       - name: Restore packages
         run: flutter pub get
 
-      - name: Build Android App Bundle
+      - name: Build Android App
         run: flutter build
