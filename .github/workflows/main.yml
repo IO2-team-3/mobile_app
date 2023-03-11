@@ -30,4 +30,4 @@ jobs:
         run: flutter pub get
 
       - name: Build Android App Bundle
-        run: flutter build appbundle --release
+        run: flutter build
