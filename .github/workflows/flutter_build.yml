@@ -36,5 +36,8 @@ jobs:
       - name: Build Android appbundle
         run: flutter build appbundle
       
+      - name: Build web
+        run: flutter build web
+      
       - name: Run tests
-        run: flutter teset
+        run: flutter test
