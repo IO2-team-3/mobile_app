@@ -15,19 +15,25 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Setup Java to compile Android project
-        uses: actions/setup-java@v1
+        uses: actions/setup-java@v2
         with:
           java-version: '11.x'
 
       - name: Install and set Flutter version
-        uses: subosito/flutter-action@v1.4.0
+        uses: subosito/flutter-action@v2.8.0
         with:
-          flutter-version: '2.0.1'
-      - name: update flutter
-        run: flutter upgrade
+          flutter-version: '3.7.7'
+#       - name: update flutter
+#         run: flutter upgrade
 
       - name: Restore packages
         run: flutter pub get
 
-      - name: Build Android App
-        run: flutter build
+      - name: Build Android apk
+        run: flutter build apk
+        
+      - name: Build Android appbundle
+        run: flutter build appbundle
+      
+      - name: Run tests
+        run: flutter teset
