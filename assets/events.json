@@ -1,0 +1,34 @@
+[
+    {
+        "id": 10,
+        "freePlace": 2,
+        "title": " Short description of Event 1",
+        "startTime": 1673034164,
+        "endTime": 1683034164,
+        "name": "Long description of Event 1",
+        "placeSchema": "Seralized place schema 1",
+        "status": "done",
+        "categories": [
+            {
+                "id": 1,
+                "name": "Sport"
+            }
+        ]
+    },
+    {
+        "id": 11,
+        "freePlace": 15,
+        "title": "Short description of Event 2",
+        "startTime": 1673034167,
+        "endTime": 16830341345,
+        "name": "Long description of Event 2",
+        "placeSchema": "Seralized place schema 2",
+        "status": "done",
+        "categories": [
+            {
+                "id": 2,
+                "name": "Sport"
+            }
+        ]
+    }
+]

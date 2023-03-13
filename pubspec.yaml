@@ -7,8 +7,11 @@ environment:
   sdk: '>=2.19.4 <3.0.0'
 
 dependencies:
+  dio: ^5.0.2
   flutter:
     sdk: flutter
+  http: ^0.13.5
+  provider: ^6.0.5
 
 dev_dependencies:
   flutter_test:
@@ -17,3 +20,6 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+  assets:
+    - assets/events.json
