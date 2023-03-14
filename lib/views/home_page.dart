@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_app/services/slideshow_service.dart';
+import 'package:mobile_app/views/carousel.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -9,8 +11,8 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('EventWave'),
       ),
-      body: const Center(
-        child: Text('Nice main page'),
+      body: Carousel(
+        slideshowService: SlideshowService(),
       ),
       drawer: const AppMenu(),
     );

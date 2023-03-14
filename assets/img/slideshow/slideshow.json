@@ -1,0 +1,37 @@
+[
+    {
+        "id": "1",
+        "photo": "event",
+        "text": "Organize an event and show it to the world!"
+    },
+    {
+        "id": "2",
+        "photo": "concert",
+        "text": "Join the organizers of the best music shows."
+    },
+    {
+        "id": "3",
+        "photo": "student",
+        "text": "Gain an audience for your scientific event."
+    },
+    {
+        "id": "4",
+        "photo": "business_meeting",
+        "text": "Simplify reservation system for business meeting."
+    },
+    {
+        "id": "5",
+        "photo": "stadium",
+        "text": "Let fans join your event and feel sporting excitement."
+    },
+    {
+        "id": "6",
+        "photo": "orchestra",
+        "text": "All best cultural events in one place."
+    },
+    {
+        "id": "7",
+        "photo": "tickets",
+        "text": "Easy and safe reservation system."
+    }
+]
