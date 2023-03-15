@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_app/models/event.dart';
 import 'package:mobile_app/services/events_service.dart';
+import 'package:intl/intl.dart';
 
 class EventsList extends StatefulWidget {
   final EventsService eventsService;
@@ -39,7 +40,7 @@ class _EventsListState extends State<EventsList> {
               },
             );
           } else {
-            return const CircularProgressIndicator();
+            return const Center(child: CircularProgressIndicator());
           }
         },
       ),
@@ -71,7 +72,10 @@ class EventTile extends StatelessWidget {
               leading: Icon(
                   icons[event.categories[0].id]), // TODO show all categories
               title: Text(event.title),
-              subtitle: Text(event.name),
+              subtitle: Text(
+                event.name,
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
@@ -115,18 +119,63 @@ class EventDetails extends StatelessWidget {
     var startDate = DateTime.fromMillisecondsSinceEpoch(event.startTime * 1000);
     var endDate = DateTime.fromMillisecondsSinceEpoch(event.endTime * 1000);
 
-    var startDateStr = startDate.toString();
-    var endDateStr = endDate.toString();
+    var startDateStr = DateFormat.yMMMd().format(startDate);
+    var endDateStr = DateFormat.yMMMd().format(endDate);
 
     return Scaffold(
       appBar: AppBar(
         title: Text(event.title),
       ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          // Add your onPressed code here!
+        },
+        label: const Text('Reserve'),
+        icon: const Icon(Icons.add),
+        backgroundColor: Colors.amber,
+      ),
       body: Column(
         children: [
-          Text(event.name),
-          Text('Start date: $startDateStr'),
-          Text('End date: $endDateStr'),
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Text(
+                event.name,
+                style: const TextStyle(
+                  fontSize: 20,
+                ),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Container(
+                    decoration: BoxDecoration(
+                        border: Border.all(
+                            color: const Color.fromARGB(255, 22, 180, 207)),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(20))),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text('Start date: $startDateStr'),
+                    )),
+                Container(
+                  decoration: BoxDecoration(
+                      border: Border.all(
+                          color: const Color.fromARGB(255, 22, 180, 207)),
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(20))),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text('End date: $endDateStr'),
+                  ),
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );

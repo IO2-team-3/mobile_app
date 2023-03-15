@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_app/services/slideshow_service.dart';
 import 'package:mobile_app/views/carousel.dart';
 
 class HomePage extends StatelessWidget {
@@ -11,8 +10,33 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('EventWave'),
       ),
-      body: Carousel(
-        slideshowService: SlideshowService(),
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/img/layout/background.jpg'),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Padding(
+              padding: EdgeInsets.all(20.0),
+              child: Carousel(),
+            ),
+            Center(
+              child: Container(
+                margin: const EdgeInsets.all(20.0),
+                child: const Text(
+                  "Creating events, organizing business meetings, throwing parties are all at your fingertips!",
+                  style: TextStyle(
+                      color: Color.fromARGB(255, 22, 180, 207), fontSize: 30),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            )
+          ],
+        ),
       ),
       drawer: const AppMenu(),
     );
@@ -29,8 +53,12 @@ class AppMenu extends StatelessWidget {
     return Drawer(
       child: ListView(
         children: [
-          const DrawerHeader(
-            child: Text('drawer header'),
+          DrawerHeader(
+            child: SizedBox(
+              height: 140,
+              width: MediaQuery.of(context).size.width,
+              child: Image.asset('assets/img/logo/full.png'),
+            ),
           ),
           ListTile(
             title: const Text('Events'),
@@ -39,7 +67,7 @@ class AppMenu extends StatelessWidget {
             },
           ),
           ListTile(
-            title: const Text('Item 2'),
+            title: const Text('My reservations'),
             onTap: () {
               Navigator.pop(context);
             },

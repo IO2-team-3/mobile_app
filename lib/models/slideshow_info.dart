@@ -1,27 +1,11 @@
-import 'dart:convert';
-
 class SlideshowInfo {
-  late String id;
-  late String photo;
-  late String text;
+  final String id;
+  final String photo;
+  final String text;
 
-  SlideshowInfo({required this.id, required this.photo, required this.text});
-
-  SlideshowInfo.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    photo = json['photo'];
-    text = json['text'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = {};
-    data['id'] = id;
-    data['photo'] = photo;
-    data['text'] = text;
-    return data;
-  }
+  const SlideshowInfo({
+    required this.id,
+    required this.photo,
+    required this.text,
+  });
 }
-
-List<SlideshowInfo> slideShowInfoListFromJson(String str) =>
-    List<SlideshowInfo>.from(
-        json.decode(str).map((x) => SlideshowInfo.fromJson(x)));
