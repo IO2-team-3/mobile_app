@@ -16,7 +16,7 @@ class Carousel extends StatelessWidget {
         initialPage: 1,
         autoPlay: true,
       ),
-      items: getImageSliders2(constants.Slideshow.imgList),
+      items: getImageSliders(constants.Slideshow.imgList),
     );
   }
 }
@@ -26,28 +26,6 @@ String getPathToSlideshowImg(String imgName) {
 }
 
 List<Widget> getImageSliders(List<SlideshowInfo> imgList) {
-  return imgList
-      .map(
-        (item) => Container(
-          margin: const EdgeInsets.all(5.0),
-          child: ClipRRect(
-            borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-            child: Stack(
-              children: <Widget>[
-                Image(
-                  image: AssetImage(
-                    getPathToSlideshowImg(item.photo),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      )
-      .toList();
-}
-
-List<Widget> getImageSliders2(List<SlideshowInfo> imgList) {
   return imgList
       .map(
         (item) => Container(

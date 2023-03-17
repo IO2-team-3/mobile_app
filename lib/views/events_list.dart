@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mobile_app/models/event.dart';
 import 'package:mobile_app/services/events_service.dart';
 import 'package:intl/intl.dart';
+import 'package:http/http.dart' as http;
 
 class EventsList extends StatefulWidget {
   final EventsService eventsService;
@@ -17,7 +18,7 @@ class _EventsListState extends State<EventsList> {
   @override
   void initState() {
     super.initState();
-    _events = widget.eventsService.fetchEventsList();
+    _events = widget.eventsService.fetchEventsList(http.Client());
   }
 
   @override

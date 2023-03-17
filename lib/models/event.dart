@@ -1,9 +1,9 @@
 import 'dart:convert';
 
-List<Event> eventFromJson(String str) =>
+List<Event> eventsListFromJson(String str) =>
     List<Event>.from(json.decode(str).map((x) => Event.fromJson(x)));
 
-String eventToJson(List<Event> data) =>
+String eventsListToJson(List<Event> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class Event {
