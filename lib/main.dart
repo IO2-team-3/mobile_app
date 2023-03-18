@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_app/providers/events_list_provider.dart';
 import 'package:mobile_app/services/mocks/fake_events_service.dart';
 import 'package:mobile_app/views/events_list.dart';
 import 'package:mobile_app/views/home_page.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(const MainApp());
@@ -21,8 +23,11 @@ class MainApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => const HomePage(),
-        '/events_page': (context) =>
-            EventsList(eventsService: FakeEventsService())
+        '/events_page': (context) => ChangeNotifierProvider(
+              create: (_) =>
+                  EventsListProvider(eventsListService: FakeEventsService()),
+              child: const EventsList(),
+            ),
       },
     );
   }

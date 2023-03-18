@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:mobile_app/services/api_config.dart';
-import 'package:mobile_app/services/events_service.dart';
+import 'package:mobile_app/services/events_list_service.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:mobile_app/models/event.dart';
@@ -13,8 +13,8 @@ void main() {
   group('fetchEvents', () {
     test('returns a list of Events if the http call completes successfully',
         () async {
-      final subject = EventsService();
       final client = MockClient();
+      final subject = EventsListService(client: client);
 
       when(client.get(Uri.parse('${ApiConfig.baseUrl}/events')))
           .thenAnswer((_) async => http.Response('''[{
@@ -34,17 +34,17 @@ void main() {
                 ]
               }]''', 200));
 
-      expect(await subject.fetchEventsList(client), isA<List<Event>>());
+      expect(await subject.fetchEventsList(), isA<List<Event>>());
     });
 
     test('throws an exception if the http call completes with an error', () {
-      final subject = EventsService();
       final client = MockClient();
+      final subject = EventsListService(client: client);
 
       when(client.get(Uri.parse('${ApiConfig.baseUrl}/events')))
           .thenAnswer((_) async => http.Response('Not Found', 404));
 
-      expect(subject.fetchEventsList(client), throwsException);
+      expect(subject.fetchEventsList(), throwsException);
     });
   });
 }

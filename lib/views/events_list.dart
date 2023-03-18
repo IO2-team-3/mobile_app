@@ -1,24 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_app/models/event.dart';
-import 'package:mobile_app/services/events_service.dart';
+import 'package:mobile_app/providers/events_list_provider.dart';
 import 'package:intl/intl.dart';
-import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 
 class EventsList extends StatefulWidget {
-  final EventsService eventsService;
-  const EventsList({super.key, required this.eventsService});
+  const EventsList({super.key});
 
   @override
   State<EventsList> createState() => _EventsListState();
 }
 
 class _EventsListState extends State<EventsList> {
-  late Future<List<Event>> _events;
-
   @override
   void initState() {
     super.initState();
-    _events = widget.eventsService.fetchEventsList(http.Client());
+    Future.microtask(
+      () => context.read<EventsListProvider>().getEventsList(),
+    );
   }
 
   @override
@@ -27,22 +26,21 @@ class _EventsListState extends State<EventsList> {
       appBar: AppBar(
         title: const Text('Events'),
       ),
-      body: FutureBuilder<List<Event>>(
-        future: _events,
-        builder: (context, snapshot) {
-          if (snapshot.hasData &&
-              snapshot.connectionState == ConnectionState.done) {
-            return ListView.builder(
-              itemCount: snapshot.data!.length,
-              itemBuilder: (context, index) {
-                return EventTile(
-                  event: snapshot.data![index],
-                );
-              },
+      body: Consumer<EventsListProvider>(
+        builder: (context, value, child) {
+          if (value.isLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
             );
-          } else {
-            return const Center(child: CircularProgressIndicator());
           }
+          return ListView.builder(
+            itemCount: value.events.length,
+            itemBuilder: (_, index) {
+              return EventTile(
+                event: value.events[index],
+              );
+            },
+          );
         },
       ),
     );
