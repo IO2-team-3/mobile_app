@@ -19,19 +19,21 @@ class HomePage extends StatelessWidget {
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Padding(
+          children: const [
+            Padding(
               padding: EdgeInsets.all(20.0),
               child: Carousel(),
             ),
-            Center(
-              child: Container(
-                margin: const EdgeInsets.all(20.0),
-                child: const Text(
-                  "Creating events, organizing business meetings, throwing parties are all at your fingertips!",
-                  style: TextStyle(
-                      color: Color.fromARGB(255, 22, 180, 207), fontSize: 30),
-                  textAlign: TextAlign.center,
+            Flexible(
+              child: Center(
+                child: Padding(
+                  padding: EdgeInsets.all(20.0),
+                  child: Text(
+                    "Creating events, organizing business meetings, throwing parties are all at your fingertips!",
+                    style: TextStyle(
+                        color: Color.fromARGB(255, 22, 180, 207), fontSize: 30),
+                    textAlign: TextAlign.center,
+                  ),
                 ),
               ),
             )

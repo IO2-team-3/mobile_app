@@ -49,11 +49,6 @@ class _EventsListState extends State<EventsList> {
 
 class EventTile extends StatelessWidget {
   final Event event;
-  final icons = const {
-    // TODO consult category ids
-    1: Icons.sports_football_outlined,
-    2: Icons.music_note,
-  };
 
   const EventTile({
     super.key,
@@ -68,8 +63,6 @@ class EventTile extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             ListTile(
-              leading: Icon(
-                  icons[event.categories[0].id]), // TODO show all categories
               title: Text(event.title),
               subtitle: Text(
                 event.name,
@@ -80,7 +73,7 @@ class EventTile extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
                 TextButton(
-                  child: const Text('BUY TICKETS'),
+                  child: const Text('RESERVE'),
                   onPressed: () {/* ... */},
                 ),
                 const SizedBox(width: 8),
@@ -102,6 +95,18 @@ class EventTile extends StatelessWidget {
                 const SizedBox(width: 8),
               ],
             ),
+            Wrap(
+              spacing: 5,
+              children: List.generate(event.categories.length, (index) {
+                return Chip(
+                  label: Text(
+                    event.categories[index].name,
+                    style: const TextStyle(color: Colors.black),
+                  ),
+                  backgroundColor: Colors.amber,
+                );
+              }),
+            ),
           ],
         ),
       ),
@@ -118,8 +123,10 @@ class EventDetails extends StatelessWidget {
     var startDate = DateTime.fromMillisecondsSinceEpoch(event.startTime * 1000);
     var endDate = DateTime.fromMillisecondsSinceEpoch(event.endTime * 1000);
 
-    var startDateStr = DateFormat.yMMMd().format(startDate);
-    var endDateStr = DateFormat.yMMMd().format(endDate);
+    var startDateStrYMMD = DateFormat.yMMMd().format(startDate);
+    var startDateStrHM = DateFormat.jm().format(startDate);
+    var endDateStrYMMD = DateFormat.yMMMd().format(endDate);
+    var endDateStrHM = DateFormat.jm().format(endDate);
 
     return Scaffold(
       appBar: AppBar(
@@ -152,15 +159,21 @@ class EventDetails extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Container(
-                    decoration: BoxDecoration(
-                        border: Border.all(
-                            color: const Color.fromARGB(255, 22, 180, 207)),
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(20))),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text('Start date: $startDateStr'),
-                    )),
+                  decoration: BoxDecoration(
+                      border: Border.all(
+                          color: const Color.fromARGB(255, 22, 180, 207)),
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(20))),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      children: [
+                        Text('Start date: $startDateStrYMMD'),
+                        Text(startDateStrHM),
+                      ],
+                    ),
+                  ),
+                ),
                 Container(
                   decoration: BoxDecoration(
                       border: Border.all(
@@ -169,7 +182,12 @@ class EventDetails extends StatelessWidget {
                           const BorderRadius.all(Radius.circular(20))),
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Text('End date: $endDateStr'),
+                    child: Column(
+                      children: [
+                        Text('End date: $endDateStrYMMD'),
+                        Text(endDateStrHM),
+                      ],
+                    ),
                   ),
                 ),
               ],
