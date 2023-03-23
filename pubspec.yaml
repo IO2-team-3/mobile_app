@@ -15,6 +15,9 @@ dependencies:
   carousel_slider: ^4.2.1
   intl: ^0.18.0
   mockito: ^5.3.2
+  openapi:
+    path: api
+  built_collection: '>=5.1.1 <6.0.0'
 
 dev_dependencies:
   flutter_test:

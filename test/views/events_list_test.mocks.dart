@@ -3,12 +3,14 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i4;
+import 'dart:async' as _i5;
+import 'dart:ui' as _i7;
 
-import 'package:http/http.dart' as _i2;
-import 'package:mobile_app/models/event.dart' as _i5;
-import 'package:mobile_app/services/events_list_service.dart' as _i3;
+import 'package:built_collection/built_collection.dart' as _i6;
+import 'package:dio/dio.dart' as _i3;
+import 'package:mobile_app/providers/api_provider.dart' as _i4;
 import 'package:mockito/mockito.dart' as _i1;
+import 'package:openapi/openapi.dart' as _i2;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -21,8 +23,8 @@ import 'package:mockito/mockito.dart' as _i1;
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
-class _FakeClient_0 extends _i1.SmartFake implements _i2.Client {
-  _FakeClient_0(
+class _FakeOpenapi_0 extends _i1.SmartFake implements _i2.Openapi {
+  _FakeOpenapi_0(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -31,36 +33,91 @@ class _FakeClient_0 extends _i1.SmartFake implements _i2.Client {
         );
 }
 
-/// A class which mocks [EventsListService].
+class _FakeResponse_1<T> extends _i1.SmartFake implements _i3.Response<T> {
+  _FakeResponse_1(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+/// A class which mocks [APIProvider].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockEventsListService extends _i1.Mock implements _i3.EventsListService {
-  MockEventsListService() {
+class MockAPIProvider extends _i1.Mock implements _i4.APIProvider {
+  MockAPIProvider() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i2.Client get client => (super.noSuchMethod(
-        Invocation.getter(#client),
-        returnValue: _FakeClient_0(
+  _i2.Openapi get api => (super.noSuchMethod(
+        Invocation.getter(#api),
+        returnValue: _FakeOpenapi_0(
           this,
-          Invocation.getter(#client),
+          Invocation.getter(#api),
         ),
-      ) as _i2.Client);
+      ) as _i2.Openapi);
   @override
-  set client(_i2.Client? _client) => super.noSuchMethod(
+  set api(_i2.Openapi? _api) => super.noSuchMethod(
         Invocation.setter(
-          #client,
-          _client,
+          #api,
+          _api,
         ),
         returnValueForMissingStub: null,
       );
   @override
-  _i4.Future<List<_i5.Event>> fetchEventsList() => (super.noSuchMethod(
+  bool get hasListeners => (super.noSuchMethod(
+        Invocation.getter(#hasListeners),
+        returnValue: false,
+      ) as bool);
+  @override
+  _i5.Future<_i3.Response<_i6.BuiltList<_i2.Event>>> fetchEventsList() =>
+      (super.noSuchMethod(
         Invocation.method(
           #fetchEventsList,
           [],
         ),
-        returnValue: _i4.Future<List<_i5.Event>>.value(<_i5.Event>[]),
-      ) as _i4.Future<List<_i5.Event>>);
+        returnValue: _i5.Future<_i3.Response<_i6.BuiltList<_i2.Event>>>.value(
+            _FakeResponse_1<_i6.BuiltList<_i2.Event>>(
+          this,
+          Invocation.method(
+            #fetchEventsList,
+            [],
+          ),
+        )),
+      ) as _i5.Future<_i3.Response<_i6.BuiltList<_i2.Event>>>);
+  @override
+  void addListener(_i7.VoidCallback? listener) => super.noSuchMethod(
+        Invocation.method(
+          #addListener,
+          [listener],
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  void removeListener(_i7.VoidCallback? listener) => super.noSuchMethod(
+        Invocation.method(
+          #removeListener,
+          [listener],
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  void dispose() => super.noSuchMethod(
+        Invocation.method(
+          #dispose,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  void notifyListeners() => super.noSuchMethod(
+        Invocation.method(
+          #notifyListeners,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
 }

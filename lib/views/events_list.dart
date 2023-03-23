@@ -1,11 +1,13 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:mobile_app/models/event.dart';
-import 'package:mobile_app/providers/events_list_provider.dart';
+import 'package:mobile_app/providers/api_provider.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
+import 'package:openapi/openapi.dart';
+import 'package:built_collection/built_collection.dart';
 
 class EventsList extends StatefulWidget {
-  const EventsList({super.key});
+  final APIProvider apiProvider;
+  const EventsList({super.key, required this.apiProvider});
 
   @override
   State<EventsList> createState() => _EventsListState();
@@ -13,31 +15,25 @@ class EventsList extends StatefulWidget {
 
 class _EventsListState extends State<EventsList> {
   @override
-  void initState() {
-    super.initState();
-    Future.microtask(
-      () => context.read<EventsListProvider>().getEventsList(),
-    );
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Events'),
       ),
-      body: Consumer<EventsListProvider>(
-        builder: (context, value, child) {
-          if (value.isLoading) {
+      body: FutureBuilder<Response<BuiltList<Event>>>(
+        future: widget.apiProvider.fetchEventsList(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
             return const Center(
               child: CircularProgressIndicator(),
             );
           }
+          var eventsList = snapshot.data!.data!;
           return ListView.builder(
-            itemCount: value.events.length,
+            itemCount: eventsList.length,
             itemBuilder: (_, index) {
               return EventTile(
-                event: value.events[index],
+                event: eventsList[index],
               );
             },
           );
@@ -63,9 +59,9 @@ class EventTile extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             ListTile(
-              title: Text(event.title),
+              title: Text(event.title!),
               subtitle: Text(
-                event.name,
+                event.name!,
                 overflow: TextOverflow.ellipsis,
               ),
             ),
@@ -97,10 +93,10 @@ class EventTile extends StatelessWidget {
             ),
             Wrap(
               spacing: 5,
-              children: List.generate(event.categories.length, (index) {
+              children: List.generate(event.categories!.length, (index) {
                 return Chip(
                   label: Text(
-                    event.categories[index].name,
+                    event.categories![index].name!,
                     style: const TextStyle(color: Colors.black),
                   ),
                   backgroundColor: Colors.amber,
@@ -120,8 +116,9 @@ class EventDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var startDate = DateTime.fromMillisecondsSinceEpoch(event.startTime * 1000);
-    var endDate = DateTime.fromMillisecondsSinceEpoch(event.endTime * 1000);
+    var startDate =
+        DateTime.fromMillisecondsSinceEpoch(event.startTime! * 1000);
+    var endDate = DateTime.fromMillisecondsSinceEpoch(event.endTime! * 1000);
 
     var startDateStrYMMD = DateFormat.yMMMd().format(startDate);
     var startDateStrHM = DateFormat.jm().format(startDate);
@@ -130,7 +127,7 @@ class EventDetails extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(event.title),
+        title: Text(event.title!),
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
@@ -146,7 +143,7 @@ class EventDetails extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(20.0),
               child: Text(
-                event.name,
+                event.name!,
                 style: const TextStyle(
                   fontSize: 20,
                 ),

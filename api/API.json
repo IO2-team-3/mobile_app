@@ -128,7 +128,7 @@
             "required": true,
             "schema": {
               "type": "string",
-              "example": 40.4775315
+              "example": "40.4775315"
             }
           },
           {
@@ -138,7 +138,7 @@
             "required": true,
             "schema": {
               "type": "string",
-              "example": -3.7051359
+              "example": "-3.7051359"
             }
           },
           {
@@ -749,11 +749,11 @@
           },
           "latitude": {
             "type": "string",
-            "example": 40.4775315
+            "example": "40.4775315"
           },
           "longitude": {
             "type": "string",
-            "example": -3.7051359
+            "example": "-3.7051359"
           },
           "name": {
             "type": "string",
