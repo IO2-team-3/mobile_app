@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mobile_app/views/carousel.dart';
-import 'package:mobile_app/views/home_page.dart';
+import 'package:mobile_app/views/home_page/carousel.dart';
+import 'package:mobile_app/views/home_page/home_page.dart';
 
 void main() {
   group('home page', () {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_app/views/carousel.dart';
+import 'package:mobile_app/views/home_page/carousel.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
