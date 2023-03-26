@@ -23,8 +23,9 @@ class APIProvider extends provider.ChangeNotifier {
     return api.getCategoriesApi().getCategories();
   }
 
-  Future<Response<BuiltList<Event>>> fetchEventByCategoryId(
-      {required int categoryId}) async {
+  Future<Response<BuiltList<Event>>> fetchEventByCategoryId({
+    required int categoryId,
+  }) async {
     return api.getEventApi().getByCategory(categoryId: categoryId);
   }
 }

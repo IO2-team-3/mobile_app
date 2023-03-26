@@ -11,16 +11,16 @@ class ModalProgressIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (inAsyncCall) return child;
+    if (!inAsyncCall) return child;
 
     return Stack(
       children: [
         child,
         const Opacity(
-          opacity: 0.4,
+          opacity: 0.2,
           child: ModalBarrier(dismissible: false),
         ),
-        const CircularProgressIndicator(),
+        const Center(child: CircularProgressIndicator()),
       ],
     );
   }

@@ -740,20 +740,42 @@
                     "startTime": {
                         "type": "integer",
                         "format": "int64",
-                        "example": 1673034164
+                        "example": 1673034164,
+                        "x-faker": {
+                            "datatype.number": [
+                                100000,
+                                0
+                            ]
+                        }
                     },
                     "endTime": {
                         "type": "integer",
                         "format": "int64",
-                        "example": 1683034164
+                        "example": 1683034164,
+                        "x-faker": {
+                            "datatype.number": [
+                                100000,
+                                0
+                            ]
+                        }
                     },
                     "latitude": {
                         "type": "string",
-                        "example": "40.4775315"
+                        "example": "40.4775315",
+                        "x-faker": {
+                            "helpers.replaceSymbols": [
+                                "##.####"
+                            ]
+                        }
                     },
                     "longitude": {
                         "type": "string",
-                        "example": "-3.7051359"
+                        "example": "-3.7051359",
+                        "x-faker": {
+                            "helpers.replaceSymbols": [
+                                "##.####"
+                            ]
+                        }
                     },
                     "name": {
                         "type": "string",
@@ -761,7 +783,12 @@
                     },
                     "placeSchema": {
                         "type": "string",
-                        "example": "Seralized place schema"
+                        "example": "Seralized place schema",
+                        "x-faker": {
+                            "helpers.replaceSymbols": [
+                                "#################"
+                            ]
+                        }
                     },
                     "status": {
                         "$ref": "#/components/schemas/EventStatus"
@@ -784,7 +811,8 @@
                     },
                     "name": {
                         "type": "string",
-                        "example": "Sport"
+                        "example": "Sport",
+                        "x-faker": "commerce.department"
                     }
                 }
             },

@@ -39,6 +39,11 @@ class _EventsListState extends State<EventsList> {
       body: FutureBuilder<Response<BuiltList<Event>>>(
         future: widget.apiProvider.fetchEventsList(),
         builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return const Center(
+              child: Text('Connection error!'),
+            );
+          }
           if (!snapshot.hasData) {
             return const Center(
               child: CircularProgressIndicator(),

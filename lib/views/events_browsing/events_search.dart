@@ -1,7 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_app/providers/search_query_provider.dart';
-import 'package:mobile_app/views/events_browsing/categories_list.dart';
+import 'package:mobile_app/views/events_browsing/categories_selection.dart';
+import 'package:mobile_app/views/events_browsing/distance_selection.dart';
 import 'package:openapi/openapi.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:provider/provider.dart';
@@ -30,7 +31,8 @@ class EventsSearch extends SearchDelegate {
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) => Center(
-                    child: CategoriesList(categoriesFuture: categoriesFuture),
+                    child:
+                        CategoriesSelection(categoriesFuture: categoriesFuture),
                   ),
                 ),
               );
@@ -40,7 +42,11 @@ class EventsSearch extends SearchDelegate {
             icon: const Icon(Icons.arrow_drop_down),
             label: const Text('Location'),
             onPressed: () {
-              // TODO
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => const DistanceSelection(),
+                ),
+              );
             },
           ),
         ],
@@ -65,9 +71,9 @@ class EventsSearch extends SearchDelegate {
     //           child: CircularProgressIndicator(),
     //         );
     //       }
-    //       var categoriesList = snapshot.data!.data!;
+    //       var CategoriesSelection = snapshot.data!.data!;
     //       List<Category> suggestions =
-    //           categoriesList.asList().where((searchResult) {
+    //           CategoriesSelection.asList().where((searchResult) {
     //         final result = searchResult.name!.toLowerCase();
     //         final input = query.toLowerCase();
 

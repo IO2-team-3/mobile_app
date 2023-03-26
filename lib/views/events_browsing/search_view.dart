@@ -6,7 +6,7 @@ import 'package:mobile_app/views/events_browsing/distance_selection.dart';
 import 'package:openapi/openapi.dart';
 import 'package:provider/provider.dart';
 
-import 'categories_list.dart';
+import 'categories_selection.dart';
 
 class SearchView extends StatefulWidget {
   final Future<Response<BuiltList<Category>>> categoriesFuture;
@@ -72,7 +72,7 @@ class _SearchViewState extends State<SearchView> {
                     Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (context) => Center(
-                          child: CategoriesList(
+                          child: CategoriesSelection(
                             categoriesFuture: widget.categoriesFuture,
                           ),
                         ),
@@ -128,7 +128,8 @@ class _SearchViewState extends State<SearchView> {
   }
 
   Text _getLocationText() {
-    var selectedDistance = Provider.of<SearchQueryProvider>(context).distance;
+    var selectedDistance =
+        Provider.of<SearchQueryProvider>(context).distanceInKm;
     if (selectedDistance == null) {
       return const Text('Search radius');
     }

@@ -8,7 +8,7 @@ class SearchQueryProvider extends ChangeNotifier {
   final List<Category> _categories = [];
   String _eventName = "";
   Location? _location;
-  double? _distance;
+  double? _distanceInKm;
 
   UnmodifiableListView<Category> get categories =>
       UnmodifiableListView(_categories);
@@ -16,7 +16,7 @@ class SearchQueryProvider extends ChangeNotifier {
   String get eventName => _eventName;
 
   Location? get currentLocation => _location;
-  double? get distance => _distance;
+  double? get distanceInKm => _distanceInKm;
 
   void addCategory(Category category) {
     _categories.add(category);
@@ -49,12 +49,12 @@ class SearchQueryProvider extends ChangeNotifier {
   }
 
   void setDistance(double dist) {
-    _distance = dist;
+    _distanceInKm = dist;
     notifyListeners();
   }
 
   void resetLocationQuery() {
-    _distance = null;
+    _distanceInKm = null;
     _location = null;
     notifyListeners();
   }
@@ -62,7 +62,7 @@ class SearchQueryProvider extends ChangeNotifier {
   void resetSearchQuery() {
     _eventName = "";
     _categories.clear();
-    _distance = null;
+    _distanceInKm = null;
     _location = null;
     notifyListeners();
   }

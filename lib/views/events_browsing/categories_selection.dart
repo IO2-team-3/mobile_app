@@ -5,15 +5,15 @@ import 'package:mobile_app/providers/search_query_provider.dart';
 import 'package:openapi/openapi.dart';
 import 'package:provider/provider.dart';
 
-class CategoriesList extends StatefulWidget {
+class CategoriesSelection extends StatefulWidget {
   final Future<Response<BuiltList<Category>>> categoriesFuture;
-  const CategoriesList({super.key, required this.categoriesFuture});
+  const CategoriesSelection({super.key, required this.categoriesFuture});
 
   @override
-  State<CategoriesList> createState() => _CategoriesListState();
+  State<CategoriesSelection> createState() => _CategoriesSelectionState();
 }
 
-class _CategoriesListState extends State<CategoriesList> {
+class _CategoriesSelectionState extends State<CategoriesSelection> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,17 +41,17 @@ class _CategoriesListState extends State<CategoriesList> {
               child: CircularProgressIndicator(),
             );
           }
-          var categoriesList = snapshot.data!.data!;
+          var CategoriesSelection = snapshot.data!.data!;
           return ListView.builder(
-            itemCount: categoriesList.length,
+            itemCount: CategoriesSelection.length,
             itemBuilder: (context, index) {
               return Consumer<SearchQueryProvider>(
                 builder: (context, categoryProvider, child) {
                   bool isSelected = categoryProvider.categories
-                      .contains(categoriesList[index]);
+                      .contains(CategoriesSelection[index]);
                   return CategoryTile(
                     isSelected: isSelected,
-                    category: categoriesList[index],
+                    category: CategoriesSelection[index],
                   );
                 },
               );

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mobile_app/providers/search_query_provider.dart';
+import 'package:mobile_app/views/events_browsing/modal_progress_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:geocoding/geocoding.dart';
 
@@ -16,7 +17,7 @@ class _DistanceSelectionState extends State<DistanceSelection> {
   String? _addressLine;
   Location? _location;
   bool _isAddressCorrect = false;
-  // bool _isTranslatingAddress = false;
+  bool _isTranslatingAddress = false;
   double? _distance;
 
   final _formKey = GlobalKey<FormState>();
@@ -36,7 +37,17 @@ class _DistanceSelectionState extends State<DistanceSelection> {
         actions: [
           TextButton(
             onPressed: () async {
-              bool isAddressCorrect = await _getLocationFromAddress();
+              bool isAddressCorrect = false;
+              try {
+                isAddressCorrect = await _getLocationFromAddress();
+              } catch (e) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Connection error!'),
+                  ),
+                );
+                Navigator.of(context).pop();
+              }
               setState(() {
                 _isAddressCorrect = isAddressCorrect;
               });
@@ -46,78 +57,77 @@ class _DistanceSelectionState extends State<DistanceSelection> {
                     content: Text('Filters applied!'),
                   ),
                 );
-                Future.delayed(const Duration(seconds: 1), () {
-                  // TODO for testing purposes
-                  Provider.of<SearchQueryProvider>(context, listen: false)
-                      .setDistance(
-                          _distance!); // TODO _CastError (Null check operator used on a null value)
-                  Provider.of<SearchQueryProvider>(context, listen: false)
-                      .setCurrentLocation(_location!);
-                  Navigator.of(context).pop();
-                });
+                Provider.of<SearchQueryProvider>(context, listen: false)
+                    .setDistance(_distance!);
+                Provider.of<SearchQueryProvider>(context, listen: false)
+                    .setCurrentLocation(_location!);
+                Navigator.of(context).pop();
               }
             },
             child: const Text('APPLY'),
           ),
         ],
       ),
-      body: Form(
-        key: _formKey,
-        child: Column(
-          children: [
-            Container(
-              margin: const EdgeInsets.all(20),
-              child: TextFormField(
-                //controller: addressController,
-                onChanged: (value) => setState(() {
-                  _addressLine = value;
-                }),
-                decoration: const InputDecoration(
-                  hintText: 'e.g. 1600 Amphiteatre Parkway, Mountain View',
-                  border: UnderlineInputBorder(),
-                  label: Text('Your address'),
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter a value';
-                  }
+      body: ModalProgressIndicator(
+        inAsyncCall: _isTranslatingAddress,
+        child: Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              Container(
+                margin: const EdgeInsets.all(20),
+                child: TextFormField(
+                  //controller: addressController,
+                  onChanged: (value) => setState(() {
+                    _addressLine = value;
+                  }),
+                  decoration: const InputDecoration(
+                    hintText: 'e.g. 1600 Amphiteatre Parkway, Mountain View',
+                    border: UnderlineInputBorder(),
+                    label: Text('Your address'),
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter a value';
+                    }
 
-                  if (!_isAddressCorrect) {
-                    _isAddressCorrect = true;
-                    return 'Please re-enter the address in correct format';
-                  }
+                    if (!_isAddressCorrect) {
+                      _isAddressCorrect = true;
+                      return 'Please re-enter the address in correct format';
+                    }
 
-                  return null;
-                },
-              ),
-            ),
-            Container(
-              margin: const EdgeInsets.all(20),
-              child: TextFormField(
-                decoration: const InputDecoration(
-                  border: UnderlineInputBorder(),
-                  hintText: 'e.g. 25',
-                  suffixText: 'km',
-                  label: Text('Search radius'),
+                    return null;
+                  },
                 ),
-                keyboardType: TextInputType.number,
-                inputFormatters: [
-                  FilteringTextInputFormatter.digitsOnly,
-                ],
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter a value';
-                  }
-                  return null;
-                },
-                onChanged: (value) {
-                  setState(() {
-                    _distance = double.parse(value);
-                  });
-                },
               ),
-            ),
-          ],
+              Container(
+                margin: const EdgeInsets.all(20),
+                child: TextFormField(
+                  decoration: const InputDecoration(
+                    border: UnderlineInputBorder(),
+                    hintText: 'e.g. 25',
+                    suffixText: 'km',
+                    label: Text('Search radius'),
+                  ),
+                  keyboardType: TextInputType.number,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.digitsOnly,
+                  ],
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter a value';
+                    }
+                    return null;
+                  },
+                  onChanged: (value) {
+                    setState(() {
+                      _distance = double.parse(value);
+                    });
+                  },
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -127,7 +137,21 @@ class _DistanceSelectionState extends State<DistanceSelection> {
     if (_addressLine == null) {
       return false;
     }
-    List<Location> locations = await locationFromAddress(_addressLine!);
+    setState(() {
+      _isTranslatingAddress = true;
+    });
+    // TODO throws exception on network problem!
+    List<Location> locations;
+    try {
+      locations = await locationFromAddress(_addressLine!);
+    } catch (e) {
+      rethrow;
+    } finally {
+      setState(() {
+        _isTranslatingAddress = false;
+      });
+    }
+
     if (locations.isEmpty) {
       return false;
     }

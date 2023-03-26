@@ -36,6 +36,11 @@ class _FilteredEventListState extends State<FilteredEventList> {
           Provider.of<SearchQueryProvider>(context),
         ),
         builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return const Center(
+              child: Text('Connection error!'),
+            );
+          }
           if (!snapshot.hasData) {
             return const Center(
               child: CircularProgressIndicator(),
@@ -58,20 +63,20 @@ class _FilteredEventListState extends State<FilteredEventList> {
   }
 
   List<Event> _filterEvents(List<Event> events, SearchQueryProvider query) {
-    bool distanceSpecified = query.distance != null;
+    bool distanceSpecified = query.distanceInKm != null;
     var filtered = events
-        .where((event) => event.name!.contains(query.eventName))
+        .where((event) => event.title!.contains(query.eventName))
         .where((event) {
       if (!distanceSpecified) {
         return true;
       }
-      final distance = GeolocatorPlatform.instance.distanceBetween(
+      final distanceInMeters = GeolocatorPlatform.instance.distanceBetween(
         query.currentLocation!.latitude,
         query.currentLocation!.longitude,
-        double.parse(event.latitude!), // TODO make reasonable schema
-        double.parse(event.longitude!), // TODO error handling
+        double.parse(event.latitude!),
+        double.parse(event.longitude!),
       );
-      if (distance < query.distance!) {
+      if (distanceInMeters / 1000 < query.distanceInKm!) {
         return true;
       }
       return false;
