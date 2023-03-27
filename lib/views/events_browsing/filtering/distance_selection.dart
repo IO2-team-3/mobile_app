@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mobile_app/providers/search_query_provider.dart';
-import 'package:mobile_app/views/events_browsing/modal_progress_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:geocoding/geocoding.dart';
+
+import 'modal_progress_indicator.dart';
 
 class DistanceSelection extends StatefulWidget {
   const DistanceSelection({super.key});
@@ -13,7 +14,6 @@ class DistanceSelection extends StatefulWidget {
 }
 
 class _DistanceSelectionState extends State<DistanceSelection> {
-  //TextEditingController addressController = TextEditingController();
   String? _addressLine;
   Location? _location;
   bool _isAddressCorrect = false;
@@ -77,7 +77,6 @@ class _DistanceSelectionState extends State<DistanceSelection> {
               Container(
                 margin: const EdgeInsets.all(20),
                 child: TextFormField(
-                  //controller: addressController,
                   onChanged: (value) => setState(() {
                     _addressLine = value;
                   }),
@@ -140,7 +139,7 @@ class _DistanceSelectionState extends State<DistanceSelection> {
     setState(() {
       _isTranslatingAddress = true;
     });
-    // TODO throws exception on network problem!
+
     List<Location> locations;
     try {
       locations = await locationFromAddress(_addressLine!);

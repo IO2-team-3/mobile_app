@@ -4,18 +4,23 @@ import 'package:openapi/openapi.dart';
 // tests for Category
 void main() {
   final instance = CategoryBuilder();
-  // TODO add properties to the builder and call build()
+  final _id = 1;
+  final _name = 'test-category';
+
+  instance
+    ..id = _id
+    ..name = _name
+  final subject = instance.build();
 
   group(Category, () {
     // int id
     test('to test the property `id`', () async {
-      // TODO
+      expect(subject.id, _id);
     });
 
     // String name
     test('to test the property `name`', () async {
-      // TODO
+      expect(subject.name, _name);
     });
-
   });
 }

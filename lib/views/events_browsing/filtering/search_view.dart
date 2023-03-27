@@ -1,16 +1,12 @@
-import 'package:built_collection/built_collection.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_app/providers/search_query_provider.dart';
-import 'package:mobile_app/views/events_browsing/distance_selection.dart';
-import 'package:openapi/openapi.dart';
+import 'package:mobile_app/views/events_browsing/filtering/distance_selection.dart';
 import 'package:provider/provider.dart';
 
 import 'categories_selection.dart';
 
 class SearchView extends StatefulWidget {
-  final Future<Response<BuiltList<Category>>> categoriesFuture;
-  const SearchView({super.key, required this.categoriesFuture});
+  const SearchView({super.key});
 
   @override
   State<SearchView> createState() => _SearchViewState();
@@ -71,11 +67,7 @@ class _SearchViewState extends State<SearchView> {
                   onPressed: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) => Center(
-                          child: CategoriesSelection(
-                            categoriesFuture: widget.categoriesFuture,
-                          ),
-                        ),
+                        builder: (context) => const CategoriesSelection(),
                       ),
                     );
                   },
@@ -103,7 +95,6 @@ class _SearchViewState extends State<SearchView> {
                 onPressed: () {
                   Provider.of<SearchQueryProvider>(context, listen: false)
                       .setEventName(query);
-                  //Navigator.of(context).pop();
                   Navigator.of(context)
                       .pushReplacementNamed('/events_page/filtered');
                 },

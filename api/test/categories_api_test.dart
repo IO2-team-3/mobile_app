@@ -1,7 +1,6 @@
 import 'package:test/test.dart';
 import 'package:openapi/openapi.dart';
 
-
 /// tests for CategoriesApi
 void main() {
   final instance = Openapi().getCategoriesApi();
@@ -20,6 +19,5 @@ void main() {
     test('test getCategories', () async {
       // TODO
     });
-
   });
 }
