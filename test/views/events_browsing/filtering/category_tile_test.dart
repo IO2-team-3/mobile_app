@@ -1,19 +1,7 @@
-import 'dart:collection';
-
-import 'package:built_collection/built_collection.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mobile_app/providers/categories_cache_provider.dart';
-import 'package:mobile_app/providers/search_query_provider.dart';
-import 'package:mobile_app/views/events_browsing/filtering/categories_selection.dart';
 import 'package:mobile_app/views/events_browsing/filtering/category_tile.dart';
-import 'package:mockito/annotations.dart';
-import 'package:mockito/mockito.dart';
 import 'package:openapi/openapi.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
-import 'categories_selection_test.mocks.dart';
 
 void main() {
   final categoryFromProvider = (CategoryBuilder()

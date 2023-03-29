@@ -7,15 +7,20 @@ import 'package:openapi/openapi.dart';
 class EventsCacheProvider extends ChangeNotifier {
   APIProvider apiProvider;
 
-  final Duration _cacheValidDuration = const Duration(minutes: 10);
-  DateTime _lastFetchTime = DateTime.fromMicrosecondsSinceEpoch(0);
-  Response<BuiltList<Event>>? _allEvents;
+  @visibleForTesting
+  final Duration cacheValidDuration = const Duration(minutes: 10);
+
+  @visibleForTesting
+  DateTime lastFetchTime = DateTime.fromMicrosecondsSinceEpoch(0);
+
+  @visibleForTesting
+  Response<BuiltList<Event>>? allEvents;
 
   EventsCacheProvider({required this.apiProvider});
 
   Future<void> refreshAllEvents(bool notifyListeners) async {
-    _allEvents = await apiProvider.fetchEventsList();
-    _lastFetchTime = DateTime.now();
+    allEvents = await apiProvider.fetchEventsList();
+    lastFetchTime = DateTime.now();
     if (notifyListeners) {
       this.notifyListeners();
     }
@@ -23,14 +28,14 @@ class EventsCacheProvider extends ChangeNotifier {
 
   Future<Response<BuiltList<Event>>> getAllEvents(
       {bool forceRefresh = false}) async {
-    bool shouldRefreshFromApi = (_allEvents == null ||
-        _lastFetchTime.isBefore(DateTime.now().subtract(_cacheValidDuration)) ||
+    bool shouldRefreshFromApi = (allEvents == null ||
+        lastFetchTime.isBefore(DateTime.now().subtract(cacheValidDuration)) ||
         forceRefresh);
 
     if (shouldRefreshFromApi) {
       await refreshAllEvents(false);
     }
 
-    return _allEvents!;
+    return allEvents!;
   }
 }

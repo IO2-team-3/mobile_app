@@ -7,15 +7,20 @@ import 'package:openapi/openapi.dart';
 class CategoriesCacheProvider extends ChangeNotifier {
   APIProvider apiProvider;
 
-  final Duration _cacheValidDuration = const Duration(minutes: 10);
-  DateTime _lastFetchTime = DateTime.fromMicrosecondsSinceEpoch(0);
-  Response<BuiltList<Category>>? _allCategories;
+  @visibleForTesting
+  final Duration cacheValidDuration = const Duration(minutes: 10);
+
+  @visibleForTesting
+  DateTime lastFetchTime = DateTime.fromMicrosecondsSinceEpoch(0);
+
+  @visibleForTesting
+  Response<BuiltList<Category>>? allCategories;
 
   CategoriesCacheProvider({required this.apiProvider});
 
   Future<void> refreshAllCategories(bool notifyListeners) async {
-    _allCategories = await apiProvider.fetchCategoriesList();
-    _lastFetchTime = DateTime.now();
+    allCategories = await apiProvider.fetchCategoriesList();
+    lastFetchTime = DateTime.now();
     if (notifyListeners) {
       this.notifyListeners();
     }
@@ -23,14 +28,14 @@ class CategoriesCacheProvider extends ChangeNotifier {
 
   Future<Response<BuiltList<Category>>> getAllCategories(
       {bool forceRefresh = false}) async {
-    bool shouldRefreshFromApi = (_allCategories == null ||
-        _lastFetchTime.isBefore(DateTime.now().subtract(_cacheValidDuration)) ||
+    bool shouldRefreshFromApi = (allCategories == null ||
+        lastFetchTime.isBefore(DateTime.now().subtract(cacheValidDuration)) ||
         forceRefresh);
 
     if (shouldRefreshFromApi) {
       await refreshAllCategories(false);
     }
 
-    return _allCategories!;
+    return allCategories!;
   }
 }

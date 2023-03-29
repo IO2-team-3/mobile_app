@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_app/providers/location_provider.dart';
 import 'package:mobile_app/providers/search_query_provider.dart';
 import 'package:mobile_app/views/events_browsing/filtering/distance_selection.dart';
 import 'package:provider/provider.dart';
@@ -13,13 +14,21 @@ class SearchView extends StatefulWidget {
 }
 
 class _SearchViewState extends State<SearchView> {
-  late String query;
-  TextEditingController textEditingController = TextEditingController();
+  final TextEditingController _queryEditingController = TextEditingController();
 
   @override
   void initState() {
-    query = Provider.of<SearchQueryProvider>(context, listen: false).eventName;
     super.initState();
+    _queryEditingController.text =
+        Provider.of<SearchQueryProvider>(context, listen: false).eventName;
+    _queryEditingController.addListener(_getSearchButtonText);
+    _queryEditingController.addListener(() => setState(() {}));
+  }
+
+  @override
+  void dispose() {
+    _queryEditingController.dispose();
+    super.dispose();
   }
 
   @override
@@ -41,14 +50,9 @@ class _SearchViewState extends State<SearchView> {
           Container(
             margin: const EdgeInsets.all(20),
             child: TextField(
-              controller: textEditingController,
-              onChanged: (value) {
-                setState(() {
-                  query = value;
-                });
-              },
+              controller: _queryEditingController,
               decoration: InputDecoration(
-                hintText: query == '' ? 'Event name' : query,
+                hintText: 'Event name',
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(20),
                   borderSide: const BorderSide(color: Colors.white),
@@ -56,45 +60,52 @@ class _SearchViewState extends State<SearchView> {
               ),
             ),
           ),
-          SizedBox(
-            height: 50,
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              children: [
-                OutlinedButton.icon(
-                  icon: const Icon(Icons.arrow_drop_down),
-                  label: _getCategoriesText(),
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => const CategoriesSelection(),
-                      ),
-                    );
-                  },
-                ),
-                const SizedBox(width: 20),
-                OutlinedButton.icon(
-                  icon: const Icon(Icons.arrow_drop_down),
-                  label: _getLocationText(),
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => const DistanceSelection(),
-                      ),
-                    );
-                  },
-                ),
-              ],
+          Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: SizedBox(
+              height: 50,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: [
+                  OutlinedButton.icon(
+                    icon: const Icon(Icons.arrow_drop_down),
+                    label: _getCategoriesText(),
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const CategoriesSelection(),
+                        ),
+                      );
+                    },
+                  ),
+                  const SizedBox(width: 20),
+                  OutlinedButton.icon(
+                    icon: const Icon(Icons.arrow_drop_down),
+                    label: _getLocationText(),
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              ChangeNotifierProvider<LocationProvider>(
+                            create: (context) => LocationProvider(),
+                            child: const DistanceSelection(),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              ),
             ),
           ),
           Expanded(
             child: Center(
               child: OutlinedButton.icon(
                 icon: const Icon(Icons.manage_search),
-                label: Text('Search for "$query"\n& apply filters'),
+                label: _getSearchButtonText(),
                 onPressed: () {
                   Provider.of<SearchQueryProvider>(context, listen: false)
-                      .setEventName(query);
+                      .setEventName(_queryEditingController.text);
                   Navigator.of(context)
                       .pushReplacementNamed('/events_page/filtered');
                 },
@@ -124,6 +135,11 @@ class _SearchViewState extends State<SearchView> {
     if (selectedDistance == null) {
       return const Text('Search radius');
     }
-    return Text("in < $selectedDistance km");
+    return Text("< $selectedDistance km");
+  }
+
+  Text _getSearchButtonText() {
+    return Text(
+        'Search for "${_queryEditingController.text}"\n& apply filters');
   }
 }

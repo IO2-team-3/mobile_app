@@ -39,7 +39,7 @@ class SearchQueryProvider extends ChangeNotifier {
   }
 
   void resetEventName() {
-    _eventName = eventName;
+    _eventName = '';
     notifyListeners();
   }
 
@@ -60,7 +60,7 @@ class SearchQueryProvider extends ChangeNotifier {
   }
 
   void resetSearchQuery() {
-    _eventName = "";
+    _eventName = '';
     _categories.clear();
     _distanceInKm = null;
     _location = null;
