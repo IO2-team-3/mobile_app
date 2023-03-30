@@ -49,6 +49,9 @@ To terminate the session type `q`.
 You can do the same from VS Code.
 The steps are analogous to those in the case of running on an emulator.
 
+### Temporary measure: running the app before the backend is ready
+Install the Prism server: https://github.com/stoplightio/prism and run it using `prism mock -d api/API_faker.json`.
+
 ### Troubleshooting
 Installing Android Studio
 * If you get an error `Missing essential plugin XYZ some plugin ...`, go to `C:\Users\ABC\AppData\Roaming\Google\AndroidStudioXXX` and delete the `disabled_plugins.txt` file.
