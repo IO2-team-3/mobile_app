@@ -144,7 +144,7 @@
           {
             "name": "categories",
             "in": "query",
-            "description": "Unix time stamp of end of event",
+            "description": "Array of id of categories that event belong to.",
             "required": true,
             "schema": {
               "type": "array",
@@ -545,6 +545,33 @@
             "description": "organizer already exist"
           }
         }
+      },
+      "get": {
+        "tags": [
+          "Event organizer"
+        ],
+        "summary": "Get organizer account (my account)",
+        "operationId": "getOrganizer",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Organizer"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "invalid session"
+          }
+        },
+        "security": [
+          {
+            "token": []
+          }
+        ]
       }
     },
     "/organizer/{id}": {
@@ -728,11 +755,6 @@
             "format": "int64",
             "example": 10
           },
-          "freePlace": {
-            "type": "integer",
-            "format": "int64",
-            "example": 2
-          },
           "title": {
             "type": "string",
             "example": "Short description of Event"
@@ -771,6 +793,36 @@
             "items": {
               "$ref": "#/components/schemas/Category"
             }
+          },
+          "freePlace": {
+            "type": "integer",
+            "format": "int64",
+            "example": 2
+          },
+          "maxPlace": {
+            "type": "integer",
+            "format": "int64",
+            "example": 100
+          },
+          "places": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Place"
+            }
+          }
+        }
+      },
+      "Place": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "example": 21
+          },
+          "free": {
+            "type": "boolean",
+            "example": true
           }
         }
       },

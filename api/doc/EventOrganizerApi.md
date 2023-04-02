@@ -11,6 +11,7 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**confirm**](EventOrganizerApi.md#confirm) | **POST** /organizer/{id} | Confirm orginizer account
 [**deleteOrganizer**](EventOrganizerApi.md#deleteorganizer) | **DELETE** /organizer/{id} | Confirm orginizer account
+[**getOrganizer**](EventOrganizerApi.md#getorganizer) | **GET** /organizer | Get organizer account (my account)
 [**loginOrganizer**](EventOrganizerApi.md#loginorganizer) | **GET** /organizer/login | Logs organizer into the system
 [**patchOrganizer**](EventOrganizerApi.md#patchorganizer) | **PATCH** /organizer/{id} | Patch orginizer account
 [**signUp**](EventOrganizerApi.md#signup) | **POST** /organizer | Create orginizer account
@@ -100,6 +101,47 @@ void (empty response body)
 
  - **Content-Type**: Not defined
  - **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **getOrganizer**
+> Organizer getOrganizer()
+
+Get organizer account (my account)
+
+### Example
+```dart
+import 'package:openapi/api.dart';
+// TODO Configure API key authorization: token
+//defaultApiClient.getAuthentication<ApiKeyAuth>('token').apiKey = 'YOUR_API_KEY';
+// uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+//defaultApiClient.getAuthentication<ApiKeyAuth>('token').apiKeyPrefix = 'Bearer';
+
+final api = Openapi().getEventOrganizerApi();
+
+try {
+    final response = api.getOrganizer();
+    print(response);
+} catch on DioError (e) {
+    print('Exception when calling EventOrganizerApi->getOrganizer: $e\n');
+}
+```
+
+### Parameters
+This endpoint does not need any parameter.
+
+### Return type
+
+[**Organizer**](Organizer.md)
+
+### Authorization
+
+[token](../README.md#token)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

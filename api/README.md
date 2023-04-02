@@ -75,6 +75,7 @@ Class | Method | HTTP request | Description
 [*EventApi*](doc\EventApi.md) | [**patchEvent**](doc\EventApi.md#patchevent) | **PATCH** /events/{id} | patch existing event
 [*EventOrganizerApi*](doc\EventOrganizerApi.md) | [**confirm**](doc\EventOrganizerApi.md#confirm) | **POST** /organizer/{id} | Confirm orginizer account
 [*EventOrganizerApi*](doc\EventOrganizerApi.md) | [**deleteOrganizer**](doc\EventOrganizerApi.md#deleteorganizer) | **DELETE** /organizer/{id} | Confirm orginizer account
+[*EventOrganizerApi*](doc\EventOrganizerApi.md) | [**getOrganizer**](doc\EventOrganizerApi.md#getorganizer) | **GET** /organizer | Get organizer account (my account)
 [*EventOrganizerApi*](doc\EventOrganizerApi.md) | [**loginOrganizer**](doc\EventOrganizerApi.md#loginorganizer) | **GET** /organizer/login | Logs organizer into the system
 [*EventOrganizerApi*](doc\EventOrganizerApi.md) | [**patchOrganizer**](doc\EventOrganizerApi.md#patchorganizer) | **PATCH** /organizer/{id} | Patch orginizer account
 [*EventOrganizerApi*](doc\EventOrganizerApi.md) | [**signUp**](doc\EventOrganizerApi.md#signup) | **POST** /organizer | Create orginizer account
@@ -89,6 +90,7 @@ Class | Method | HTTP request | Description
  - [EventStatus](doc\EventStatus.md)
  - [LoginOrganizer200Response](doc\LoginOrganizer200Response.md)
  - [Organizer](doc\Organizer.md)
+ - [Place](doc\Place.md)
  - [ReservationDTO](doc\ReservationDTO.md)
 
 

@@ -109,13 +109,18 @@ Future<List<Event>> fetchEventsWithDesiredCategories(
     return allEvents;
   }
 
-  Set<Event> eventsWithDesiredCategories = {};
+  List<Event> eventsWithDesiredCategories = [];
   for (var category in desiredCategories) {
     var eventsWithCurrentCatgoryResponse =
         await apiProvider.fetchEventByCategoryId(categoryId: category.id!);
     var eventsWithCurrentCategory =
         eventsWithCurrentCatgoryResponse.data!.asList();
     for (var event in eventsWithCurrentCategory) {
+      bool isAlreadyInList =
+          eventsWithDesiredCategories.any((e) => e.id == event.id);
+      if (isAlreadyInList) {
+        continue;
+      }
       eventsWithDesiredCategories.add(event);
     }
   }
