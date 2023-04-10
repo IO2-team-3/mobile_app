@@ -50,7 +50,7 @@ void main() {
       expect(find.textContaining('Start date:'), findsOneWidget);
 
       var startDate = DateTime.fromMillisecondsSinceEpoch(
-          eventsFromService[0].startTime! * 1000);
+          eventsFromService[0].startTime * 1000);
       var startDateStrYMMD = DateFormat.yMMMd().format(startDate);
       var startDateStrHM = DateFormat.jm().format(startDate);
 
@@ -64,7 +64,7 @@ void main() {
       expect(find.textContaining('End date:'), findsOneWidget);
 
       var endDate = DateTime.fromMillisecondsSinceEpoch(
-          eventsFromService[0].endTime! * 1000);
+          eventsFromService[0].endTime * 1000);
       var endDateStrYMMD = DateFormat.yMMMd().format(endDate);
       var endDateStrHM = DateFormat.jm().format(endDate);
 

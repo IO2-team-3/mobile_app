@@ -36,8 +36,14 @@ void main() {
     when(mockSearchQueryProvider.eventName).thenReturn('super event');
     when(mockSearchQueryProvider.categories)
         .thenReturn(UnmodifiableListView<Category>([
-      (CategoryBuilder()..name = 'lorem').build(),
-      (CategoryBuilder()..name = 'ipsum').build(),
+      (CategoryBuilder()
+            ..name = 'lorem'
+            ..id = 1)
+          .build(),
+      (CategoryBuilder()
+            ..name = 'ipsum'
+            ..id = 2)
+          .build(),
     ]));
     when(mockSearchQueryProvider.distanceInKm).thenReturn(100);
   }

@@ -123,10 +123,10 @@ class _SearchViewState extends State<SearchView> {
     if (selectedCategories.isEmpty) {
       return const Text('Categories');
     } else if (selectedCategories.length == 1) {
-      return Text(selectedCategories[0].name!);
+      return Text(selectedCategories[0].name);
     }
     int notShownCount = selectedCategories.length - 1;
-    return Text('${selectedCategories[0].name!} +$notShownCount');
+    return Text('${selectedCategories[0].name} +$notShownCount');
   }
 
   Text _getLocationText() {

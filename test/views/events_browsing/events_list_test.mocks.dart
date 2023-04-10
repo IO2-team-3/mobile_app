@@ -3,15 +3,15 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i5;
+import 'dart:async' as _i7;
 import 'dart:ui' as _i8;
 
-import 'package:built_collection/built_collection.dart' as _i6;
+import 'package:built_collection/built_collection.dart' as _i5;
 import 'package:dio/dio.dart' as _i3;
 import 'package:mobile_app/providers/api_provider.dart' as _i2;
 import 'package:mobile_app/providers/events_cache_provider.dart' as _i4;
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:openapi/openapi.dart' as _i7;
+import 'package:openapi/openapi.dart' as _i6;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -34,8 +34,28 @@ class _FakeAPIProvider_0 extends _i1.SmartFake implements _i2.APIProvider {
         );
 }
 
-class _FakeResponse_1<T> extends _i1.SmartFake implements _i3.Response<T> {
-  _FakeResponse_1(
+class _FakeDuration_1 extends _i1.SmartFake implements Duration {
+  _FakeDuration_1(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeDateTime_2 extends _i1.SmartFake implements DateTime {
+  _FakeDateTime_2(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeResponse_3<T> extends _i1.SmartFake implements _i3.Response<T> {
+  _FakeResponse_3(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -70,22 +90,55 @@ class MockEventsCacheProvider extends _i1.Mock
         returnValueForMissingStub: null,
       );
   @override
+  Duration get cacheValidDuration => (super.noSuchMethod(
+        Invocation.getter(#cacheValidDuration),
+        returnValue: _FakeDuration_1(
+          this,
+          Invocation.getter(#cacheValidDuration),
+        ),
+      ) as Duration);
+  @override
+  DateTime get lastFetchTime => (super.noSuchMethod(
+        Invocation.getter(#lastFetchTime),
+        returnValue: _FakeDateTime_2(
+          this,
+          Invocation.getter(#lastFetchTime),
+        ),
+      ) as DateTime);
+  @override
+  set lastFetchTime(DateTime? _lastFetchTime) => super.noSuchMethod(
+        Invocation.setter(
+          #lastFetchTime,
+          _lastFetchTime,
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  set allEvents(_i3.Response<_i5.BuiltList<_i6.Event>>? _allEvents) =>
+      super.noSuchMethod(
+        Invocation.setter(
+          #allEvents,
+          _allEvents,
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
   bool get hasListeners => (super.noSuchMethod(
         Invocation.getter(#hasListeners),
         returnValue: false,
       ) as bool);
   @override
-  _i5.Future<void> refreshAllEvents(bool? notifyListeners) =>
+  _i7.Future<void> refreshAllEvents(bool? notifyListeners) =>
       (super.noSuchMethod(
         Invocation.method(
           #refreshAllEvents,
           [notifyListeners],
         ),
-        returnValue: _i5.Future<void>.value(),
-        returnValueForMissingStub: _i5.Future<void>.value(),
-      ) as _i5.Future<void>);
+        returnValue: _i7.Future<void>.value(),
+        returnValueForMissingStub: _i7.Future<void>.value(),
+      ) as _i7.Future<void>);
   @override
-  _i5.Future<_i3.Response<_i6.BuiltList<_i7.Event>>> getAllEvents(
+  _i7.Future<_i3.Response<_i5.BuiltList<_i6.Event>>> getAllEvents(
           {bool? forceRefresh = false}) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -93,8 +146,8 @@ class MockEventsCacheProvider extends _i1.Mock
           [],
           {#forceRefresh: forceRefresh},
         ),
-        returnValue: _i5.Future<_i3.Response<_i6.BuiltList<_i7.Event>>>.value(
-            _FakeResponse_1<_i6.BuiltList<_i7.Event>>(
+        returnValue: _i7.Future<_i3.Response<_i5.BuiltList<_i6.Event>>>.value(
+            _FakeResponse_3<_i5.BuiltList<_i6.Event>>(
           this,
           Invocation.method(
             #getAllEvents,
@@ -102,7 +155,7 @@ class MockEventsCacheProvider extends _i1.Mock
             {#forceRefresh: forceRefresh},
           ),
         )),
-      ) as _i5.Future<_i3.Response<_i6.BuiltList<_i7.Event>>>);
+      ) as _i7.Future<_i3.Response<_i5.BuiltList<_i6.Event>>>);
   @override
   void addListener(_i8.VoidCallback? listener) => super.noSuchMethod(
         Invocation.method(

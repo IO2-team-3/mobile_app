@@ -89,15 +89,16 @@ class MockAPIProvider extends _i1.Mock implements _i4.APIProvider {
         )),
       ) as _i5.Future<_i3.Response<_i6.BuiltList<_i2.Event>>>);
   @override
-  _i5.Future<_i3.Response<_i2.Event>> fetchEventById({required int? id}) =>
+  _i5.Future<_i3.Response<_i2.EventWithPlaces>> fetchEventById(
+          {required int? id}) =>
       (super.noSuchMethod(
         Invocation.method(
           #fetchEventById,
           [],
           {#id: id},
         ),
-        returnValue: _i5.Future<_i3.Response<_i2.Event>>.value(
-            _FakeResponse_1<_i2.Event>(
+        returnValue: _i5.Future<_i3.Response<_i2.EventWithPlaces>>.value(
+            _FakeResponse_1<_i2.EventWithPlaces>(
           this,
           Invocation.method(
             #fetchEventById,
@@ -105,7 +106,7 @@ class MockAPIProvider extends _i1.Mock implements _i4.APIProvider {
             {#id: id},
           ),
         )),
-      ) as _i5.Future<_i3.Response<_i2.Event>>);
+      ) as _i5.Future<_i3.Response<_i2.EventWithPlaces>>);
   @override
   _i5.Future<_i3.Response<_i6.BuiltList<_i2.Event>>> fetchMyEvents() =>
       (super.noSuchMethod(
@@ -158,6 +159,33 @@ class MockAPIProvider extends _i1.Mock implements _i4.APIProvider {
           ),
         )),
       ) as _i5.Future<_i3.Response<_i6.BuiltList<_i2.Event>>>);
+  @override
+  _i5.Future<_i3.Response<_i2.ReservationDTO>> makeReservation({
+    required int? eventId,
+    int? placeId,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #makeReservation,
+          [],
+          {
+            #eventId: eventId,
+            #placeId: placeId,
+          },
+        ),
+        returnValue: _i5.Future<_i3.Response<_i2.ReservationDTO>>.value(
+            _FakeResponse_1<_i2.ReservationDTO>(
+          this,
+          Invocation.method(
+            #makeReservation,
+            [],
+            {
+              #eventId: eventId,
+              #placeId: placeId,
+            },
+          ),
+        )),
+      ) as _i5.Future<_i3.Response<_i2.ReservationDTO>>);
   @override
   void addListener(_i7.VoidCallback? listener) => super.noSuchMethod(
         Invocation.method(

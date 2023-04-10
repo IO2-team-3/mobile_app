@@ -3,11 +3,11 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i7;
+import 'dart:async' as _i8;
 import 'dart:collection' as _i5;
 import 'dart:ui' as _i9;
 
-import 'package:built_collection/built_collection.dart' as _i8;
+import 'package:built_collection/built_collection.dart' as _i7;
 import 'package:dio/dio.dart' as _i3;
 import 'package:geocoding/geocoding.dart' as _i11;
 import 'package:mobile_app/providers/api_provider.dart' as _i2;
@@ -37,8 +37,8 @@ class _FakeAPIProvider_0 extends _i1.SmartFake implements _i2.APIProvider {
         );
 }
 
-class _FakeResponse_1<T> extends _i1.SmartFake implements _i3.Response<T> {
-  _FakeResponse_1(
+class _FakeDuration_1 extends _i1.SmartFake implements Duration {
+  _FakeDuration_1(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -47,8 +47,8 @@ class _FakeResponse_1<T> extends _i1.SmartFake implements _i3.Response<T> {
         );
 }
 
-class _FakeOpenapi_2 extends _i1.SmartFake implements _i4.Openapi {
-  _FakeOpenapi_2(
+class _FakeDateTime_2 extends _i1.SmartFake implements DateTime {
+  _FakeDateTime_2(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -57,9 +57,29 @@ class _FakeOpenapi_2 extends _i1.SmartFake implements _i4.Openapi {
         );
 }
 
-class _FakeUnmodifiableListView_3<E> extends _i1.SmartFake
+class _FakeResponse_3<T> extends _i1.SmartFake implements _i3.Response<T> {
+  _FakeResponse_3(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeOpenapi_4 extends _i1.SmartFake implements _i4.Openapi {
+  _FakeOpenapi_4(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeUnmodifiableListView_5<E> extends _i1.SmartFake
     implements _i5.UnmodifiableListView<E> {
-  _FakeUnmodifiableListView_3(
+  _FakeUnmodifiableListView_5(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -94,22 +114,55 @@ class MockEventsCacheProvider extends _i1.Mock
         returnValueForMissingStub: null,
       );
   @override
+  Duration get cacheValidDuration => (super.noSuchMethod(
+        Invocation.getter(#cacheValidDuration),
+        returnValue: _FakeDuration_1(
+          this,
+          Invocation.getter(#cacheValidDuration),
+        ),
+      ) as Duration);
+  @override
+  DateTime get lastFetchTime => (super.noSuchMethod(
+        Invocation.getter(#lastFetchTime),
+        returnValue: _FakeDateTime_2(
+          this,
+          Invocation.getter(#lastFetchTime),
+        ),
+      ) as DateTime);
+  @override
+  set lastFetchTime(DateTime? _lastFetchTime) => super.noSuchMethod(
+        Invocation.setter(
+          #lastFetchTime,
+          _lastFetchTime,
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  set allEvents(_i3.Response<_i7.BuiltList<_i4.Event>>? _allEvents) =>
+      super.noSuchMethod(
+        Invocation.setter(
+          #allEvents,
+          _allEvents,
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
   bool get hasListeners => (super.noSuchMethod(
         Invocation.getter(#hasListeners),
         returnValue: false,
       ) as bool);
   @override
-  _i7.Future<void> refreshAllEvents(bool? notifyListeners) =>
+  _i8.Future<void> refreshAllEvents(bool? notifyListeners) =>
       (super.noSuchMethod(
         Invocation.method(
           #refreshAllEvents,
           [notifyListeners],
         ),
-        returnValue: _i7.Future<void>.value(),
-        returnValueForMissingStub: _i7.Future<void>.value(),
-      ) as _i7.Future<void>);
+        returnValue: _i8.Future<void>.value(),
+        returnValueForMissingStub: _i8.Future<void>.value(),
+      ) as _i8.Future<void>);
   @override
-  _i7.Future<_i3.Response<_i8.BuiltList<_i4.Event>>> getAllEvents(
+  _i8.Future<_i3.Response<_i7.BuiltList<_i4.Event>>> getAllEvents(
           {bool? forceRefresh = false}) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -117,8 +170,8 @@ class MockEventsCacheProvider extends _i1.Mock
           [],
           {#forceRefresh: forceRefresh},
         ),
-        returnValue: _i7.Future<_i3.Response<_i8.BuiltList<_i4.Event>>>.value(
-            _FakeResponse_1<_i8.BuiltList<_i4.Event>>(
+        returnValue: _i8.Future<_i3.Response<_i7.BuiltList<_i4.Event>>>.value(
+            _FakeResponse_3<_i7.BuiltList<_i4.Event>>(
           this,
           Invocation.method(
             #getAllEvents,
@@ -126,7 +179,7 @@ class MockEventsCacheProvider extends _i1.Mock
             {#forceRefresh: forceRefresh},
           ),
         )),
-      ) as _i7.Future<_i3.Response<_i8.BuiltList<_i4.Event>>>);
+      ) as _i8.Future<_i3.Response<_i7.BuiltList<_i4.Event>>>);
   @override
   void addListener(_i9.VoidCallback? listener) => super.noSuchMethod(
         Invocation.method(
@@ -172,7 +225,7 @@ class MockAPIProvider extends _i1.Mock implements _i2.APIProvider {
   @override
   _i4.Openapi get api => (super.noSuchMethod(
         Invocation.getter(#api),
-        returnValue: _FakeOpenapi_2(
+        returnValue: _FakeOpenapi_4(
           this,
           Invocation.getter(#api),
         ),
@@ -191,31 +244,32 @@ class MockAPIProvider extends _i1.Mock implements _i2.APIProvider {
         returnValue: false,
       ) as bool);
   @override
-  _i7.Future<_i3.Response<_i8.BuiltList<_i4.Event>>> fetchEventsList() =>
+  _i8.Future<_i3.Response<_i7.BuiltList<_i4.Event>>> fetchEventsList() =>
       (super.noSuchMethod(
         Invocation.method(
           #fetchEventsList,
           [],
         ),
-        returnValue: _i7.Future<_i3.Response<_i8.BuiltList<_i4.Event>>>.value(
-            _FakeResponse_1<_i8.BuiltList<_i4.Event>>(
+        returnValue: _i8.Future<_i3.Response<_i7.BuiltList<_i4.Event>>>.value(
+            _FakeResponse_3<_i7.BuiltList<_i4.Event>>(
           this,
           Invocation.method(
             #fetchEventsList,
             [],
           ),
         )),
-      ) as _i7.Future<_i3.Response<_i8.BuiltList<_i4.Event>>>);
+      ) as _i8.Future<_i3.Response<_i7.BuiltList<_i4.Event>>>);
   @override
-  _i7.Future<_i3.Response<_i4.Event>> fetchEventById({required int? id}) =>
+  _i8.Future<_i3.Response<_i4.EventWithPlaces>> fetchEventById(
+          {required int? id}) =>
       (super.noSuchMethod(
         Invocation.method(
           #fetchEventById,
           [],
           {#id: id},
         ),
-        returnValue: _i7.Future<_i3.Response<_i4.Event>>.value(
-            _FakeResponse_1<_i4.Event>(
+        returnValue: _i8.Future<_i3.Response<_i4.EventWithPlaces>>.value(
+            _FakeResponse_3<_i4.EventWithPlaces>(
           this,
           Invocation.method(
             #fetchEventById,
@@ -223,42 +277,42 @@ class MockAPIProvider extends _i1.Mock implements _i2.APIProvider {
             {#id: id},
           ),
         )),
-      ) as _i7.Future<_i3.Response<_i4.Event>>);
+      ) as _i8.Future<_i3.Response<_i4.EventWithPlaces>>);
   @override
-  _i7.Future<_i3.Response<_i8.BuiltList<_i4.Event>>> fetchMyEvents() =>
+  _i8.Future<_i3.Response<_i7.BuiltList<_i4.Event>>> fetchMyEvents() =>
       (super.noSuchMethod(
         Invocation.method(
           #fetchMyEvents,
           [],
         ),
-        returnValue: _i7.Future<_i3.Response<_i8.BuiltList<_i4.Event>>>.value(
-            _FakeResponse_1<_i8.BuiltList<_i4.Event>>(
+        returnValue: _i8.Future<_i3.Response<_i7.BuiltList<_i4.Event>>>.value(
+            _FakeResponse_3<_i7.BuiltList<_i4.Event>>(
           this,
           Invocation.method(
             #fetchMyEvents,
             [],
           ),
         )),
-      ) as _i7.Future<_i3.Response<_i8.BuiltList<_i4.Event>>>);
+      ) as _i8.Future<_i3.Response<_i7.BuiltList<_i4.Event>>>);
   @override
-  _i7.Future<_i3.Response<_i8.BuiltList<_i4.Category>>> fetchCategoriesList() =>
+  _i8.Future<_i3.Response<_i7.BuiltList<_i4.Category>>> fetchCategoriesList() =>
       (super.noSuchMethod(
         Invocation.method(
           #fetchCategoriesList,
           [],
         ),
         returnValue:
-            _i7.Future<_i3.Response<_i8.BuiltList<_i4.Category>>>.value(
-                _FakeResponse_1<_i8.BuiltList<_i4.Category>>(
+            _i8.Future<_i3.Response<_i7.BuiltList<_i4.Category>>>.value(
+                _FakeResponse_3<_i7.BuiltList<_i4.Category>>(
           this,
           Invocation.method(
             #fetchCategoriesList,
             [],
           ),
         )),
-      ) as _i7.Future<_i3.Response<_i8.BuiltList<_i4.Category>>>);
+      ) as _i8.Future<_i3.Response<_i7.BuiltList<_i4.Category>>>);
   @override
-  _i7.Future<_i3.Response<_i8.BuiltList<_i4.Event>>> fetchEventByCategoryId(
+  _i8.Future<_i3.Response<_i7.BuiltList<_i4.Event>>> fetchEventByCategoryId(
           {required int? categoryId}) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -266,8 +320,8 @@ class MockAPIProvider extends _i1.Mock implements _i2.APIProvider {
           [],
           {#categoryId: categoryId},
         ),
-        returnValue: _i7.Future<_i3.Response<_i8.BuiltList<_i4.Event>>>.value(
-            _FakeResponse_1<_i8.BuiltList<_i4.Event>>(
+        returnValue: _i8.Future<_i3.Response<_i7.BuiltList<_i4.Event>>>.value(
+            _FakeResponse_3<_i7.BuiltList<_i4.Event>>(
           this,
           Invocation.method(
             #fetchEventByCategoryId,
@@ -275,7 +329,34 @@ class MockAPIProvider extends _i1.Mock implements _i2.APIProvider {
             {#categoryId: categoryId},
           ),
         )),
-      ) as _i7.Future<_i3.Response<_i8.BuiltList<_i4.Event>>>);
+      ) as _i8.Future<_i3.Response<_i7.BuiltList<_i4.Event>>>);
+  @override
+  _i8.Future<_i3.Response<_i4.ReservationDTO>> makeReservation({
+    required int? eventId,
+    int? placeId,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #makeReservation,
+          [],
+          {
+            #eventId: eventId,
+            #placeId: placeId,
+          },
+        ),
+        returnValue: _i8.Future<_i3.Response<_i4.ReservationDTO>>.value(
+            _FakeResponse_3<_i4.ReservationDTO>(
+          this,
+          Invocation.method(
+            #makeReservation,
+            [],
+            {
+              #eventId: eventId,
+              #placeId: placeId,
+            },
+          ),
+        )),
+      ) as _i8.Future<_i3.Response<_i4.ReservationDTO>>);
   @override
   void addListener(_i9.VoidCallback? listener) => super.noSuchMethod(
         Invocation.method(
@@ -322,7 +403,7 @@ class MockSearchQueryProvider extends _i1.Mock
   @override
   _i5.UnmodifiableListView<_i4.Category> get categories => (super.noSuchMethod(
         Invocation.getter(#categories),
-        returnValue: _FakeUnmodifiableListView_3<_i4.Category>(
+        returnValue: _FakeUnmodifiableListView_5<_i4.Category>(
           this,
           Invocation.getter(#categories),
         ),

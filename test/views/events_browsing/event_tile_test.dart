@@ -41,7 +41,7 @@ void main() {
         (widgetTester) async {
       await widgetTester.pumpWidget(createWidgetUnderTest());
 
-      expect(find.text(eventsFromService[0].title!), findsOneWidget);
+      expect(find.text(eventsFromService[0].title), findsOneWidget);
 
       expect(find.text('RESERVE'), findsOneWidget);
       expect(find.text('LEARN MORE'), findsOneWidget);
@@ -52,7 +52,7 @@ void main() {
       await widgetTester.pumpWidget(createWidgetUnderTest());
 
       expect(
-          find.text(eventsFromService[0].categories![0].name!), findsOneWidget);
+          find.text(eventsFromService[0].categories[0].name), findsOneWidget);
     });
   });
 }

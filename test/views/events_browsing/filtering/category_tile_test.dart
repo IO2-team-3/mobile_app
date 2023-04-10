@@ -22,7 +22,7 @@ void main() {
     testWidgets('category name is displayed', (widgetTester) async {
       await widgetTester
           .pumpWidget(createWidgetUnderTest(false, categoryFromProvider));
-      expect(find.text(categoryFromProvider.name!), findsOneWidget);
+      expect(find.text(categoryFromProvider.name), findsOneWidget);
     });
 
     testWidgets('indicates selection', (widgetTester) async {
@@ -32,7 +32,7 @@ void main() {
       expect(
           find.byWidgetPredicate((widget) =>
               widget is Text &&
-              widget.data == categoryFromProvider.name! &&
+              widget.data == categoryFromProvider.name &&
               widget.style != null &&
               widget.style!.fontWeight == FontWeight.bold),
           findsOneWidget);

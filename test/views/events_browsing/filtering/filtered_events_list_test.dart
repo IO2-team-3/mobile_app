@@ -306,8 +306,8 @@ void main() {
       await widgetTester.pumpAndSettle();
 
       expect(find.byType(EventTile), findsOneWidget);
-      expect(find.text(allEvents[1].title!), findsOneWidget);
-      expect(find.text(allEvents[1].name!), findsOneWidget);
+      expect(find.text(allEvents[1].title), findsOneWidget);
+      expect(find.text(allEvents[1].name), findsOneWidget);
     });
   });
 }

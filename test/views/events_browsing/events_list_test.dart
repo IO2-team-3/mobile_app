@@ -92,7 +92,7 @@ void main() {
       await widgetTester.pump();
 
       for (final event in eventsFromProvider) {
-        expect(find.text(event.title!), findsOneWidget);
+        expect(find.text(event.title), findsOneWidget);
       }
     });
   });

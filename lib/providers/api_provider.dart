@@ -11,7 +11,7 @@ class APIProvider extends provider.ChangeNotifier {
     return api.getEventApi().getEvents();
   }
 
-  Future<Response<Event>> fetchEventById({required int id}) async {
+  Future<Response<EventWithPlaces>> fetchEventById({required int id}) async {
     return api.getEventApi().getEventById(id: id);
   }
 
@@ -27,5 +27,14 @@ class APIProvider extends provider.ChangeNotifier {
     required int categoryId,
   }) async {
     return api.getEventApi().getByCategory(categoryId: categoryId);
+  }
+
+  Future<Response<ReservationDTO>> makeReservation({
+    required int eventId,
+    int? placeId,
+  }) async {
+    return api
+        .getReservationApi()
+        .makeReservation(eventId: eventId, placeID: placeId);
   }
 }
