@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:openapi/openapi.dart';
 
-import '../reservation_making.dart';
 import 'event_details.dart';
 
 class EventTile extends StatelessWidget {
@@ -20,8 +19,7 @@ class EventTile extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             ListTile(
-              title: Text(
-                  event.title + " id = " + event.id.toString()), // TODO remove
+              title: Text(event.title),
               subtitle: Text(
                 event.name,
                 overflow: TextOverflow.ellipsis,

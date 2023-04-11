@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:intl/intl.dart';
-import 'package:mobile_app/providers/api_provider.dart';
 import 'package:mobile_app/views/reservation_making.dart';
 import 'package:openapi/openapi.dart';
-import 'package:provider/provider.dart';
 
 class EventDetails extends StatelessWidget {
   final Event event;
