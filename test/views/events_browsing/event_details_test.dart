@@ -18,6 +18,7 @@ void main() {
             ..status = EventStatus.done
             ..longitude = '123.445'
             ..latitude = '12.2235'
+            ..maxPlace = 10
             ..categories = ListBuilder<Category>(
               [
                 (CategoryBuilder()
