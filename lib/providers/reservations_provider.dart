@@ -28,7 +28,9 @@ class ReservationsStorageProvider extends ChangeNotifier {
   Future<void> writeReservation(
       int eventId, int placeId, Reservation reservation) async {
     final pathToAppDocDir = await _localPath;
-    final reservationFile = File('$pathToAppDocDir/$eventId-$placeId');
+    final reservationFile =
+        await File('$pathToAppDocDir/reservations/$eventId-$placeId')
+            .create(recursive: true);
     reservationFile.writeAsString(jsonEncode(reservation.toJson()));
   }
 }
