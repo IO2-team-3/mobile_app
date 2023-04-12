@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:intl/intl.dart';
 import 'package:mobile_app/views/reservation_making.dart';
@@ -96,7 +97,7 @@ class EventDetails extends StatelessWidget {
             ),
           ),
           FutureBuilder<List<Placemark>>(
-            future: placemarkFromCoordinates(latitude, longitude),
+            future: placemarkFromCoordinatesSafe(latitude, longitude),
             builder: (context, snapshot) {
               if (snapshot.hasError) {
                 addressNotFound = true;
@@ -106,11 +107,11 @@ class EventDetails extends StatelessWidget {
                   child: CircularProgressIndicator(),
                 );
               }
-              if (addressNotFound) {
+              if (addressNotFound || snapshot.data!.isEmpty) {
                 return Text('(${event.longitude}, ${event.latitude})');
               } else {
                 Placemark placemark = snapshot.data![0];
-                address = placemark.toString();
+                address = getAddressString(placemark);
                 return PlacemarkInfo(placemark: placemark);
               }
             },
@@ -119,6 +120,34 @@ class EventDetails extends StatelessWidget {
       ),
     );
   }
+
+  Future<List<Placemark>> placemarkFromCoordinatesSafe(
+      double latitude, double longitude) async {
+    final List<Placemark> placemarks;
+    try {
+      placemarks = await placemarkFromCoordinates(latitude, longitude);
+    } on PlatformException {
+      return [];
+    }
+    return placemarks;
+  }
+}
+
+String getAddressString(Placemark placemark) {
+  String? street = placemark.street;
+  String? country = placemark.country;
+  String? locality = placemark.locality;
+  String? administrativeArea = placemark.administrativeArea;
+
+  final buffer = StringBuffer();
+  buffer.write(street ?? 'unknown street');
+  buffer.write('\n');
+  buffer.write(locality ?? 'unknown locality');
+  buffer.write(', ');
+  buffer.write(administrativeArea ?? 'unknown administrative area');
+  buffer.write('\n');
+  buffer.write(country ?? 'unknown country');
+  return buffer.toString();
 }
 
 class PlacemarkInfo extends StatelessWidget {
@@ -134,18 +163,18 @@ class PlacemarkInfo extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text(street ?? '?unknown street?'),
+        Text(street ?? 'unknown street'),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(locality ?? '?unknown locality?'),
+            Text(locality ?? 'unknown locality'),
             const SizedBox(
               width: 5,
             ),
-            Text(administrativeArea ?? '?unknown administrative area?'),
+            Text(administrativeArea ?? 'unknown administrative area'),
           ],
         ),
-        Text(country ?? '?unknown country?'),
+        Text(country ?? 'unknown country'),
       ],
     );
   }

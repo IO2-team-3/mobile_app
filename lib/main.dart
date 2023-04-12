@@ -8,6 +8,7 @@ import 'package:mobile_app/services/api_config.dart';
 import 'package:mobile_app/views/events_browsing/events_list.dart';
 import 'package:mobile_app/views/events_browsing/filtering/filtered_events_list.dart';
 import 'package:mobile_app/views/home_page/home_page.dart';
+import 'package:mobile_app/views/reservations_browsing/reservations_list.dart';
 import 'package:openapi/openapi.dart';
 import 'package:provider/provider.dart';
 
@@ -61,6 +62,7 @@ class MainApp extends StatelessWidget {
         '/': (context) => const HomePage(),
         '/events_page': (context) => const EventsList(),
         '/events_page/filtered': (context) => const FilteredEventList(),
+        '/reservations_page': (context) => const ReservationsList(),
       },
     );
   }

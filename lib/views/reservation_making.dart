@@ -67,13 +67,20 @@ class _ReservationMakingState extends State<ReservationMaking> {
           }
           final EventWithPlaces event = snapshot.data!.data!;
           ImageProvider placeSchemaImgProvider;
-          try {
-            placeSchemaImgProvider =
-                MemoryImage(base64Decode(base64.normalize(event.placeSchema!)));
-          } on FormatException {
+          final placeSchema = event.placeSchema;
+          if (placeSchema != null) {
+            try {
+              placeSchemaImgProvider = MemoryImage(
+                  base64Decode(base64.normalize(event.placeSchema!)));
+            } on FormatException {
+              placeSchemaImgProvider =
+                  Image.asset('assets/img/placeholder.png').image;
+            }
+          } else {
             placeSchemaImgProvider =
                 Image.asset('assets/img/placeholder.png').image;
           }
+
           final freePlaces = filterFreePlaces(event.places);
           return Column(
             children: [

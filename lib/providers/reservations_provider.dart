@@ -9,12 +9,18 @@ class ReservationsStorageProvider extends ChangeNotifier {
   Future<String> get _localPath async {
     final directory = await getApplicationDocumentsDirectory();
 
-    return directory.path;
+    return '${directory.path}/reservations';
   }
 
   Future<List<Reservation>> readReservations() async {
-    final appDocDir = await getApplicationDocumentsDirectory();
-    final entities = await appDocDir.list().toList();
+    final resDirPath = await _localPath;
+    final resDir = Directory(resDirPath);
+    final List<FileSystemEntity> entities;
+    try {
+      entities = await resDir.list().toList();
+    } on PathNotFoundException {
+      return [];
+    }
     final reservationFiles = entities.whereType<File>();
     List<Reservation> reservations = [];
     for (var file in reservationFiles) {
@@ -27,10 +33,9 @@ class ReservationsStorageProvider extends ChangeNotifier {
 
   Future<void> writeReservation(
       int eventId, int placeId, Reservation reservation) async {
-    final pathToAppDocDir = await _localPath;
+    final pathToResDir = await _localPath;
     final reservationFile =
-        await File('$pathToAppDocDir/reservations/$eventId-$placeId')
-            .create(recursive: true);
+        await File('$pathToResDir/$eventId-$placeId').create(recursive: true);
     reservationFile.writeAsString(jsonEncode(reservation.toJson()));
   }
 }
