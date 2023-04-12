@@ -104,7 +104,7 @@ void main() {
       await widgetTester.pump();
 
       for (final category in categoriesFromProvider) {
-        expect(find.text(category.name!), findsOneWidget);
+        expect(find.text(category.name), findsOneWidget);
       }
     });
 

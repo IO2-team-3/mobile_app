@@ -5,7 +5,7 @@
 import 'package:openapi/api.dart';
 ```
 
-All URIs are relative to *https://pw.edu.pl/api/v3*
+All URIs are relative to *https://yourbackenhosting.edu.pl*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -18,7 +18,7 @@ Method | HTTP request | Description
 
 
 # **confirm**
-> Organizer confirm(id, code)
+> confirm(id, code)
 
 Confirm orginizer account
 
@@ -31,8 +31,7 @@ final String id = id_example; // String | id of Organizer
 final String code = code_example; // String | code from email
 
 try {
-    final response = api.confirm(id, code);
-    print(response);
+    api.confirm(id, code);
 } catch on DioError (e) {
     print('Exception when calling EventOrganizerApi->confirm: $e\n');
 }
@@ -47,7 +46,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**Organizer**](Organizer.md)
+void (empty response body)
 
 ### Authorization
 
@@ -56,7 +55,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -191,7 +190,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patchOrganizer**
-> patchOrganizer(id, organizer)
+> patchOrganizer(id, organizerPatch)
 
 Patch orginizer account
 
@@ -205,10 +204,10 @@ import 'package:openapi/api.dart';
 
 final api = Openapi().getEventOrganizerApi();
 final String id = id_example; // String | id of Organizer
-final Organizer organizer = ; // Organizer | Update an existent user in the store
+final OrganizerPatch organizerPatch = ; // OrganizerPatch | Update an existent user in the store
 
 try {
-    api.patchOrganizer(id, organizer);
+    api.patchOrganizer(id, organizerPatch);
 } catch on DioError (e) {
     print('Exception when calling EventOrganizerApi->patchOrganizer: $e\n');
 }
@@ -219,7 +218,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **String**| id of Organizer | 
- **organizer** | [**Organizer**](Organizer.md)| Update an existent user in the store | [optional] 
+ **organizerPatch** | [**OrganizerPatch**](OrganizerPatch.md)| Update an existent user in the store | [optional] 
 
 ### Return type
 
@@ -237,7 +236,7 @@ void (empty response body)
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **signUp**
-> Organizer signUp(name, email, password)
+> Organizer signUp(organizerForm)
 
 Create orginizer account
 
@@ -246,12 +245,10 @@ Create orginizer account
 import 'package:openapi/api.dart';
 
 final api = Openapi().getEventOrganizerApi();
-final String name = name_example; // String | name of Organizer
-final String email = email_example; // String | email of Organizer
-final String password = password_example; // String | password of Organizer
+final OrganizerForm organizerForm = ; // OrganizerForm | Add event
 
 try {
-    final response = api.signUp(name, email, password);
+    final response = api.signUp(organizerForm);
     print(response);
 } catch on DioError (e) {
     print('Exception when calling EventOrganizerApi->signUp: $e\n');
@@ -262,9 +259,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **name** | **String**| name of Organizer | 
- **email** | **String**| email of Organizer | 
- **password** | **String**| password of Organizer | 
+ **organizerForm** | [**OrganizerForm**](OrganizerForm.md)| Add event | [optional] 
 
 ### Return type
 
@@ -276,7 +271,7 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

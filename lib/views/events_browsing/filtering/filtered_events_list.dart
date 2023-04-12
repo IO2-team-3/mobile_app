@@ -79,7 +79,9 @@ class _FilteredEventListState extends State<FilteredEventList> {
 List<Event> filterEvents(List<Event> events, SearchQueryProvider query) {
   bool distanceSpecified = query.distanceInKm != null;
   var filtered = events
-      .where((event) => event.title!.contains(query.eventName))
+      .where((event) =>
+          event.title.toLowerCase().contains(query.eventName.toLowerCase()) ||
+          event.name.toLowerCase().contains(query.eventName.toLowerCase()))
       .where((event) {
     if (!distanceSpecified) {
       return true;
@@ -87,8 +89,8 @@ List<Event> filterEvents(List<Event> events, SearchQueryProvider query) {
     final distanceInMeters = GeolocatorPlatform.instance.distanceBetween(
       query.currentLocation!.latitude,
       query.currentLocation!.longitude,
-      double.parse(event.latitude!),
-      double.parse(event.longitude!),
+      double.parse(event.latitude),
+      double.parse(event.longitude),
     );
     if (distanceInMeters / 1000 < query.distanceInKm!) {
       return true;
@@ -112,7 +114,7 @@ Future<List<Event>> fetchEventsWithDesiredCategories(
   List<Event> eventsWithDesiredCategories = [];
   for (var category in desiredCategories) {
     var eventsWithCurrentCatgoryResponse =
-        await apiProvider.fetchEventByCategoryId(categoryId: category.id!);
+        await apiProvider.fetchEventByCategoryId(categoryId: category.id);
     var eventsWithCurrentCategory =
         eventsWithCurrentCatgoryResponse.data!.asList();
     for (var event in eventsWithCurrentCategory) {

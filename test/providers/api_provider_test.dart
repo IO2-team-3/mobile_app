@@ -20,6 +20,7 @@ void main() {
         ..status = EventStatus.done
         ..longitude = '123.445'
         ..latitude = '12.2235'
+        ..maxPlace = 10
         ..categories = ListBuilder<Category>(
           [
             (CategoryBuilder()
@@ -28,6 +29,28 @@ void main() {
                 .build(),
           ],
         ))
+      .build();
+
+  final testEventWithPlaces = (EventWithPlacesBuilder()
+        ..id = 1
+        ..freePlace = 2
+        ..title = 'event-title'
+        ..startTime = 123
+        ..endTime = 12342350
+        ..name = 'event-name'
+        ..status = EventStatus.done
+        ..longitude = '123.445'
+        ..latitude = '12.2235'
+        ..maxPlace = 10
+        ..categories = ListBuilder<Category>(
+          [
+            (CategoryBuilder()
+                  ..id = 1
+                  ..name = 'category-name')
+                .build(),
+          ],
+        )
+        ..places = ListBuilder<Place>([]))
       .build();
   group('APIProvider', () {
     late Openapi mockApi;
@@ -63,8 +86,8 @@ void main() {
         () async {
       // arrange
       const eventId = 123;
-      final mockResponse = Response<Event>(
-        data: testEvent,
+      final mockResponse = Response<EventWithPlaces>(
+        data: testEventWithPlaces,
         requestOptions: RequestOptions(path: ''),
       );
       when(mockApi.getEventApi()).thenReturn(mockEventApi);

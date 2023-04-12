@@ -19,19 +19,15 @@ class EventTile extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             ListTile(
-              title: Text(event.title!),
+              title: Text(event.title),
               subtitle: Text(
-                event.name!,
+                event.name,
                 overflow: TextOverflow.ellipsis,
               ),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
-                TextButton(
-                  child: const Text('RESERVE'),
-                  onPressed: () {/* ... */},
-                ),
                 const SizedBox(width: 8),
                 TextButton(
                   child: const Text('LEARN MORE'),
@@ -53,10 +49,10 @@ class EventTile extends StatelessWidget {
             ),
             Wrap(
               spacing: 5,
-              children: List.generate(event.categories!.length, (index) {
+              children: List.generate(event.categories.length, (index) {
                 return Chip(
                   label: Text(
-                    event.categories![index].name!,
+                    event.categories[index].name,
                     style: const TextStyle(color: Colors.black),
                   ),
                   backgroundColor: Colors.amber,

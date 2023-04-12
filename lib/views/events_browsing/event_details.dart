@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:intl/intl.dart';
+import 'package:mobile_app/views/reservation_making.dart';
 import 'package:openapi/openapi.dart';
 
 class EventDetails extends StatelessWidget {
@@ -9,26 +10,33 @@ class EventDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var startDate =
-        DateTime.fromMillisecondsSinceEpoch(event.startTime! * 1000);
-    var endDate = DateTime.fromMillisecondsSinceEpoch(event.endTime! * 1000);
+    var startDate = DateTime.fromMillisecondsSinceEpoch(event.startTime * 1000);
+    var endDate = DateTime.fromMillisecondsSinceEpoch(event.endTime * 1000);
 
     var startDateStrYMMD = DateFormat.yMMMd().format(startDate);
     var startDateStrHM = DateFormat.jm().format(startDate);
     var endDateStrYMMD = DateFormat.yMMMd().format(endDate);
     var endDateStrHM = DateFormat.jm().format(endDate);
 
-    var latitude = double.parse(event.latitude!);
-    var longitude = double.parse(event.longitude!);
+    var latitude = double.parse(event.latitude);
+    var longitude = double.parse(event.longitude);
     bool addressNotFound = false;
+    String address = '(${event.latitude}, ${event.longitude})';
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(event.title!),
+        title: Text(event.title),
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          // Add your onPressed code here!
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => ReservationMaking(
+                eventId: event.id,
+                address: address,
+              ),
+            ),
+          );
         },
         label: const Text('Reserve'),
         icon: const Icon(Icons.add),
@@ -40,7 +48,7 @@ class EventDetails extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(20.0),
               child: Text(
-                event.name!,
+                event.name,
                 style: const TextStyle(
                   fontSize: 20,
                 ),
@@ -98,13 +106,13 @@ class EventDetails extends StatelessWidget {
                   child: CircularProgressIndicator(),
                 );
               }
-              Placemark placemark;
               if (addressNotFound) {
-                placemark = Placemark();
+                return Text('(${event.longitude}, ${event.latitude})');
               } else {
-                placemark = snapshot.data![0];
+                Placemark placemark = snapshot.data![0];
+                address = placemark.toString();
+                return PlacemarkInfo(placemark: placemark);
               }
-              return PlacemarkInfo(placemark: placemark);
             },
           ),
         ],

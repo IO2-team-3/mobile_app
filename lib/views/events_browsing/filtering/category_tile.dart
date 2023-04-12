@@ -19,7 +19,7 @@ class CategoryTile extends StatelessWidget {
           )
         : null;
     return ListTile(
-      title: Text(category.name!, style: style),
+      title: Text(category.name, style: style),
       trailing: Checkbox(
         checkColor: Colors.white,
         fillColor: MaterialStateProperty.resolveWith(_getColor),

@@ -11,6 +11,8 @@ import 'package:mobile_app/views/home_page/home_page.dart';
 import 'package:openapi/openapi.dart';
 import 'package:provider/provider.dart';
 
+import 'providers/reservations_provider.dart';
+
 void main() {
   final APIProvider apiProvider = APIProvider(
     api: Openapi(
@@ -33,7 +35,10 @@ void main() {
         ChangeNotifierProvider<CategoriesCacheProvider>(
           create: (context) =>
               CategoriesCacheProvider(apiProvider: apiProvider),
-        )
+        ),
+        ChangeNotifierProvider<ReservationsStorageProvider>(
+          create: (context) => ReservationsStorageProvider(),
+        ),
       ],
       child: const MainApp(),
     ),

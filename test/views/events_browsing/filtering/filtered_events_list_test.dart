@@ -57,6 +57,7 @@ void main() {
           ..status = EventStatus.done
           ..longitude = '5.0'
           ..latitude = '6.0'
+          ..maxPlace = 10
           ..categories = ListBuilder<Category>(
             [
               categoriesById[0],
@@ -306,8 +307,8 @@ void main() {
       await widgetTester.pumpAndSettle();
 
       expect(find.byType(EventTile), findsOneWidget);
-      expect(find.text(allEvents[1].title!), findsOneWidget);
-      expect(find.text(allEvents[1].name!), findsOneWidget);
+      expect(find.text(allEvents[1].title), findsOneWidget);
+      expect(find.text(allEvents[1].name), findsOneWidget);
     });
   });
 }

@@ -17,6 +17,7 @@ void main() {
             ..status = EventStatus.done
             ..longitude = '123.445'
             ..latitude = '12.2235'
+            ..maxPlace = 10
             ..categories = ListBuilder<Category>(
               [
                 (CategoryBuilder()
@@ -37,22 +38,20 @@ void main() {
       );
     }
 
-    testWidgets('reserve & learn more buttons are displayed',
-        (widgetTester) async {
+    testWidgets('learn more button is displayed', (widgetTester) async {
       await widgetTester.pumpWidget(createWidgetUnderTest());
 
-      expect(find.text(eventsFromService[0].title!), findsOneWidget);
+      expect(find.text(eventsFromService[0].title), findsOneWidget);
 
-      expect(find.text('RESERVE'), findsOneWidget);
       expect(find.text('LEARN MORE'), findsOneWidget);
-      expect(find.byType(TextButton), findsNWidgets(2));
+      expect(find.byType(TextButton), findsNWidgets(1));
     });
 
     testWidgets('categories are displayed', (widgetTester) async {
       await widgetTester.pumpWidget(createWidgetUnderTest());
 
       expect(
-          find.text(eventsFromService[0].categories![0].name!), findsOneWidget);
+          find.text(eventsFromService[0].categories[0].name), findsOneWidget);
     });
   });
 }

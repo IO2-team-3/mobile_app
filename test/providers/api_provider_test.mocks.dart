@@ -5,7 +5,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i9;
 
-import 'package:built_collection/built_collection.dart' as _i11;
+import 'package:built_collection/built_collection.dart' as _i12;
 import 'package:built_value/serializer.dart' as _i3;
 import 'package:dio/dio.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
@@ -14,8 +14,11 @@ import 'package:openapi/src/api/categories_api.dart' as _i4;
 import 'package:openapi/src/api/event_api.dart' as _i5;
 import 'package:openapi/src/api/event_organizer_api.dart' as _i6;
 import 'package:openapi/src/api/reservation_api.dart' as _i7;
-import 'package:openapi/src/model/category.dart' as _i12;
+import 'package:openapi/src/model/category.dart' as _i15;
 import 'package:openapi/src/model/event.dart' as _i10;
+import 'package:openapi/src/model/event_form.dart' as _i11;
+import 'package:openapi/src/model/event_patch.dart' as _i14;
+import 'package:openapi/src/model/event_with_places.dart' as _i13;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -254,15 +257,7 @@ class MockEventApi extends _i1.Mock implements _i5.EventApi {
 
   @override
   _i9.Future<_i2.Response<_i10.Event>> addEvent({
-    required String? title,
-    required String? name,
-    required int? freePlace,
-    required int? startTime,
-    required int? endTime,
-    required String? latitude,
-    required String? longitude,
-    required _i11.BuiltList<int>? categories,
-    String? placeSchema,
+    _i11.EventForm? eventForm,
     _i2.CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -275,15 +270,7 @@ class MockEventApi extends _i1.Mock implements _i5.EventApi {
           #addEvent,
           [],
           {
-            #title: title,
-            #name: name,
-            #freePlace: freePlace,
-            #startTime: startTime,
-            #endTime: endTime,
-            #latitude: latitude,
-            #longitude: longitude,
-            #categories: categories,
-            #placeSchema: placeSchema,
+            #eventForm: eventForm,
             #cancelToken: cancelToken,
             #headers: headers,
             #extra: extra,
@@ -299,15 +286,7 @@ class MockEventApi extends _i1.Mock implements _i5.EventApi {
             #addEvent,
             [],
             {
-              #title: title,
-              #name: name,
-              #freePlace: freePlace,
-              #startTime: startTime,
-              #endTime: endTime,
-              #latitude: latitude,
-              #longitude: longitude,
-              #categories: categories,
-              #placeSchema: placeSchema,
+              #eventForm: eventForm,
               #cancelToken: cancelToken,
               #headers: headers,
               #extra: extra,
@@ -360,7 +339,7 @@ class MockEventApi extends _i1.Mock implements _i5.EventApi {
         )),
       ) as _i9.Future<_i2.Response<void>>);
   @override
-  _i9.Future<_i2.Response<_i11.BuiltList<_i10.Event>>> getByCategory({
+  _i9.Future<_i2.Response<_i12.BuiltList<_i10.Event>>> getByCategory({
     required int? categoryId,
     _i2.CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -383,8 +362,8 @@ class MockEventApi extends _i1.Mock implements _i5.EventApi {
             #onReceiveProgress: onReceiveProgress,
           },
         ),
-        returnValue: _i9.Future<_i2.Response<_i11.BuiltList<_i10.Event>>>.value(
-            _FakeResponse_6<_i11.BuiltList<_i10.Event>>(
+        returnValue: _i9.Future<_i2.Response<_i12.BuiltList<_i10.Event>>>.value(
+            _FakeResponse_6<_i12.BuiltList<_i10.Event>>(
           this,
           Invocation.method(
             #getByCategory,
@@ -400,9 +379,9 @@ class MockEventApi extends _i1.Mock implements _i5.EventApi {
             },
           ),
         )),
-      ) as _i9.Future<_i2.Response<_i11.BuiltList<_i10.Event>>>);
+      ) as _i9.Future<_i2.Response<_i12.BuiltList<_i10.Event>>>);
   @override
-  _i9.Future<_i2.Response<_i10.Event>> getEventById({
+  _i9.Future<_i2.Response<_i13.EventWithPlaces>> getEventById({
     required int? id,
     _i2.CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -425,8 +404,8 @@ class MockEventApi extends _i1.Mock implements _i5.EventApi {
             #onReceiveProgress: onReceiveProgress,
           },
         ),
-        returnValue: _i9.Future<_i2.Response<_i10.Event>>.value(
-            _FakeResponse_6<_i10.Event>(
+        returnValue: _i9.Future<_i2.Response<_i13.EventWithPlaces>>.value(
+            _FakeResponse_6<_i13.EventWithPlaces>(
           this,
           Invocation.method(
             #getEventById,
@@ -442,9 +421,9 @@ class MockEventApi extends _i1.Mock implements _i5.EventApi {
             },
           ),
         )),
-      ) as _i9.Future<_i2.Response<_i10.Event>>);
+      ) as _i9.Future<_i2.Response<_i13.EventWithPlaces>>);
   @override
-  _i9.Future<_i2.Response<_i11.BuiltList<_i10.Event>>> getEvents({
+  _i9.Future<_i2.Response<_i12.BuiltList<_i10.Event>>> getEvents({
     _i2.CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -465,8 +444,8 @@ class MockEventApi extends _i1.Mock implements _i5.EventApi {
             #onReceiveProgress: onReceiveProgress,
           },
         ),
-        returnValue: _i9.Future<_i2.Response<_i11.BuiltList<_i10.Event>>>.value(
-            _FakeResponse_6<_i11.BuiltList<_i10.Event>>(
+        returnValue: _i9.Future<_i2.Response<_i12.BuiltList<_i10.Event>>>.value(
+            _FakeResponse_6<_i12.BuiltList<_i10.Event>>(
           this,
           Invocation.method(
             #getEvents,
@@ -481,9 +460,9 @@ class MockEventApi extends _i1.Mock implements _i5.EventApi {
             },
           ),
         )),
-      ) as _i9.Future<_i2.Response<_i11.BuiltList<_i10.Event>>>);
+      ) as _i9.Future<_i2.Response<_i12.BuiltList<_i10.Event>>>);
   @override
-  _i9.Future<_i2.Response<_i11.BuiltList<_i10.Event>>> getMyEvents({
+  _i9.Future<_i2.Response<_i12.BuiltList<_i10.Event>>> getMyEvents({
     _i2.CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -504,8 +483,8 @@ class MockEventApi extends _i1.Mock implements _i5.EventApi {
             #onReceiveProgress: onReceiveProgress,
           },
         ),
-        returnValue: _i9.Future<_i2.Response<_i11.BuiltList<_i10.Event>>>.value(
-            _FakeResponse_6<_i11.BuiltList<_i10.Event>>(
+        returnValue: _i9.Future<_i2.Response<_i12.BuiltList<_i10.Event>>>.value(
+            _FakeResponse_6<_i12.BuiltList<_i10.Event>>(
           this,
           Invocation.method(
             #getMyEvents,
@@ -520,11 +499,11 @@ class MockEventApi extends _i1.Mock implements _i5.EventApi {
             },
           ),
         )),
-      ) as _i9.Future<_i2.Response<_i11.BuiltList<_i10.Event>>>);
+      ) as _i9.Future<_i2.Response<_i12.BuiltList<_i10.Event>>>);
   @override
   _i9.Future<_i2.Response<void>> patchEvent({
     required String? id,
-    _i10.Event? event,
+    _i14.EventPatch? eventPatch,
     _i2.CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -538,7 +517,7 @@ class MockEventApi extends _i1.Mock implements _i5.EventApi {
           [],
           {
             #id: id,
-            #event: event,
+            #eventPatch: eventPatch,
             #cancelToken: cancelToken,
             #headers: headers,
             #extra: extra,
@@ -554,7 +533,7 @@ class MockEventApi extends _i1.Mock implements _i5.EventApi {
             [],
             {
               #id: id,
-              #event: event,
+              #eventPatch: eventPatch,
               #cancelToken: cancelToken,
               #headers: headers,
               #extra: extra,
@@ -576,7 +555,7 @@ class MockCategoriesApi extends _i1.Mock implements _i4.CategoriesApi {
   }
 
   @override
-  _i9.Future<_i2.Response<_i12.Category>> addCategories({
+  _i9.Future<_i2.Response<_i15.Category>> addCategories({
     required String? categoryName,
     _i2.CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -599,8 +578,8 @@ class MockCategoriesApi extends _i1.Mock implements _i4.CategoriesApi {
             #onReceiveProgress: onReceiveProgress,
           },
         ),
-        returnValue: _i9.Future<_i2.Response<_i12.Category>>.value(
-            _FakeResponse_6<_i12.Category>(
+        returnValue: _i9.Future<_i2.Response<_i15.Category>>.value(
+            _FakeResponse_6<_i15.Category>(
           this,
           Invocation.method(
             #addCategories,
@@ -616,9 +595,9 @@ class MockCategoriesApi extends _i1.Mock implements _i4.CategoriesApi {
             },
           ),
         )),
-      ) as _i9.Future<_i2.Response<_i12.Category>>);
+      ) as _i9.Future<_i2.Response<_i15.Category>>);
   @override
-  _i9.Future<_i2.Response<_i11.BuiltList<_i12.Category>>> getCategories({
+  _i9.Future<_i2.Response<_i12.BuiltList<_i15.Category>>> getCategories({
     _i2.CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -640,8 +619,8 @@ class MockCategoriesApi extends _i1.Mock implements _i4.CategoriesApi {
           },
         ),
         returnValue:
-            _i9.Future<_i2.Response<_i11.BuiltList<_i12.Category>>>.value(
-                _FakeResponse_6<_i11.BuiltList<_i12.Category>>(
+            _i9.Future<_i2.Response<_i12.BuiltList<_i15.Category>>>.value(
+                _FakeResponse_6<_i12.BuiltList<_i15.Category>>(
           this,
           Invocation.method(
             #getCategories,
@@ -656,5 +635,5 @@ class MockCategoriesApi extends _i1.Mock implements _i4.CategoriesApi {
             },
           ),
         )),
-      ) as _i9.Future<_i2.Response<_i11.BuiltList<_i12.Category>>>);
+      ) as _i9.Future<_i2.Response<_i12.BuiltList<_i15.Category>>>);
 }
