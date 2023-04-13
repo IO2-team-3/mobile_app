@@ -71,7 +71,7 @@ class AppMenu extends StatelessWidget {
           ListTile(
             title: const Text('My reservations'),
             onTap: () {
-              Navigator.pop(context);
+              Navigator.pushNamed(context, '/reservations_page');
             },
           )
         ],

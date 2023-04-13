@@ -26,7 +26,8 @@ class ReservationMaking extends StatefulWidget {
 }
 
 class _ReservationMakingState extends State<ReservationMaking> {
-  int? _selectedPlaceIndex;
+  final ValueNotifier<int?> _selectedPlaceIndexNotifier =
+      ValueNotifier<int?>(null);
   int? _selectedPlaceId;
   late int _eventId;
 
@@ -67,50 +68,72 @@ class _ReservationMakingState extends State<ReservationMaking> {
           }
           final EventWithPlaces event = snapshot.data!.data!;
           ImageProvider placeSchemaImgProvider;
-          try {
-            placeSchemaImgProvider =
-                MemoryImage(base64Decode(base64.normalize(event.placeSchema!)));
-          } on FormatException {
+          final placeSchema = event.placeSchema;
+          if (placeSchema != null) {
+            try {
+              placeSchemaImgProvider = MemoryImage(
+                  base64Decode(base64.normalize(event.placeSchema!)));
+            } on FormatException {
+              placeSchemaImgProvider =
+                  Image.asset('assets/img/placeholder.png').image;
+            }
+          } else {
             placeSchemaImgProvider =
                 Image.asset('assets/img/placeholder.png').image;
           }
+
           final freePlaces = filterFreePlaces(event.places);
           return Column(
             children: [
-              Container(
+              SizedBox(
                 width: MediaQuery.of(context).size.width,
-                height: 100,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: placeSchemaImgProvider,
-                    fit: BoxFit.fitHeight,
-                  ),
+                height: 200,
+                child: InteractiveViewer(
+                  minScale: 1.0,
+                  maxScale: 5,
+                  child: Image(
+                      image: placeSchemaImgProvider, fit: BoxFit.fitHeight),
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              const Text(
+                'Available places:',
+                style: TextStyle(
+                  color: Colors.amber,
+                  fontSize: 20.0,
                 ),
               ),
               Expanded(
-                child: SizedBox(
-                  height: 200,
-                  child: ListView.builder(
-                    itemCount: freePlaces.length,
-                    itemBuilder: (_, index) {
-                      return ListTile(
-                        title: Text('Place ${freePlaces[index].id}'),
-                        tileColor:
-                            _selectedPlaceIndex == index ? Colors.blue : null,
-                        onTap: () {
-                          setState(() {
-                            if (_selectedPlaceIndex == index) {
-                              _selectedPlaceIndex = null;
-                              _selectedPlaceId = null;
-                            } else {
-                              _selectedPlaceIndex = index;
-                              _selectedPlaceId = freePlaces[index].id;
-                            }
-                          });
+                child: ValueListenableBuilder<int?>(
+                  valueListenable: _selectedPlaceIndexNotifier,
+                  builder: (context, value, child) {
+                    return SizedBox(
+                      height: 200,
+                      child: ListView.builder(
+                        itemCount: freePlaces.length,
+                        itemBuilder: (_, index) {
+                          return ListTile(
+                            title: Text('Place ${freePlaces[index].id}'),
+                            tileColor:
+                                _selectedPlaceIndexNotifier.value == index
+                                    ? Colors.blue
+                                    : null,
+                            onTap: () {
+                              if (_selectedPlaceIndexNotifier.value == index) {
+                                _selectedPlaceIndexNotifier.value = null;
+                                _selectedPlaceId = null;
+                              } else {
+                                _selectedPlaceIndexNotifier.value = index;
+                                _selectedPlaceId = freePlaces[index].id;
+                              }
+                            },
+                          );
                         },
-                      );
-                    },
-                  ),
+                      ),
+                    );
+                  },
                 ),
               ),
               TextButton(
@@ -164,10 +187,13 @@ class _ReservationMakingState extends State<ReservationMaking> {
                   );
                   Navigator.of(context).pop();
                 },
-                child: Text(
-                  _selectedPlaceId == null
-                      ? 'RESERVE ANY PLACE'
-                      : 'RESERVE THIS PLACE',
+                child: ValueListenableBuilder<int?>(
+                  valueListenable: _selectedPlaceIndexNotifier,
+                  builder: (context, value, child) => Text(
+                    _selectedPlaceId == null
+                        ? 'RESERVE ANY PLACE'
+                        : 'RESERVE THIS PLACE',
+                  ),
                 ),
               ),
             ],
