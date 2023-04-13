@@ -32,18 +32,18 @@ class PlaceInfo extends StatelessWidget {
       ),
       body: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Container(
-              width: MediaQuery.of(context).size.width,
-              height: 100,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: placeSchemaImgProvider,
-                  fit: BoxFit.fitHeight,
-                ),
-              ),
+          SizedBox(
+            width: MediaQuery.of(context).size.width,
+            height: 200,
+            child: InteractiveViewer(
+              minScale: 1.0,
+              maxScale: 5.0,
+              child:
+                  Image(image: placeSchemaImgProvider, fit: BoxFit.fitHeight),
             ),
+          ),
+          const SizedBox(
+            height: 20,
           ),
           const Text(
             'Your place:',
