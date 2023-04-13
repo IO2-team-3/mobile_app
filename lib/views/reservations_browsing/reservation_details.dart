@@ -1,7 +1,13 @@
+import 'dart:io';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:mobile_app/models/reservation.dart';
+import 'package:mobile_app/providers/api_provider.dart';
+import 'package:mobile_app/providers/reservations_provider.dart';
 import 'package:mobile_app/views/reservations_browsing/place_info.dart';
+import 'package:provider/provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class ReservationDetails extends StatelessWidget {
@@ -39,15 +45,7 @@ class ReservationDetails extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          // TODO implement anceling a reservation
-          // Navigator.of(context).push(
-          //   MaterialPageRoute(
-          //     builder: (context) => ReservationCanceling(
-          //       eventId: event.id,
-          //       address: address,
-          //     ),
-          //   ),
-          // );
+          _showConfirmCancelingDialog(context, reservation);
         },
         label: const Text('Cancel reservation'),
         icon: const Icon(Icons.cancel_outlined),
@@ -131,6 +129,81 @@ class ReservationDetails extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+
+  Future<void> _showConfirmCancelingDialog(
+      BuildContext context, Reservation reservation) async {
+    final reservationStorageProvider =
+        context.read<ReservationsStorageProvider>();
+    final apiProvider = context.read<APIProvider>();
+    final navigator = Navigator.of(context);
+    final scaffoldMessenger = ScaffoldMessenger.of(context);
+
+    return showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Cancel reservation'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: const [
+                Text('You are about to cancel the reservation.'),
+                Text('Are you sure? This action cannot be reversed.'),
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () async {
+                try {
+                  await reservationStorageProvider.removeReservation(
+                      reservation.eventId, reservation.placeId);
+                } on PathNotFoundException {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text(
+                        "Couldn't cancel reservation!",
+                      ),
+                      backgroundColor: Color.fromARGB(255, 227, 67, 52),
+                    ),
+                  );
+                  Navigator.popUntil(
+                      context, ModalRoute.withName('/reservations_page'));
+                  return;
+                }
+
+                try {
+                  await apiProvider.deleteReservation(
+                      reservationToken: reservation.reservationToken);
+                } on DioError {
+                  scaffoldMessenger.showSnackBar(
+                    const SnackBar(
+                      content: Text("Connection error!"),
+                      backgroundColor: Color.fromARGB(255, 227, 67, 52),
+                    ),
+                  );
+                  navigator.popUntil(ModalRoute.withName('/reservations_page'));
+                  return;
+                }
+
+                scaffoldMessenger.showSnackBar(
+                  const SnackBar(
+                    content: Text("Reservation canceled."),
+                  ),
+                );
+                navigator.popUntil(ModalRoute.withName('/reservations_page'));
+              },
+              child: const Text('Confirm'),
+            ),
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('Go back'),
+            ),
+          ],
+        );
+      },
     );
   }
 }

@@ -37,4 +37,12 @@ class APIProvider extends provider.ChangeNotifier {
         .getReservationApi()
         .makeReservation(eventId: eventId, placeID: placeId);
   }
+
+  Future<Response<void>> deleteReservation({
+    required String reservationToken,
+  }) async {
+    return api
+        .getReservationApi()
+        .deleteReservation(reservationToken: reservationToken);
+  }
 }

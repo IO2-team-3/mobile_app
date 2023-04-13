@@ -187,6 +187,24 @@ class MockAPIProvider extends _i1.Mock implements _i4.APIProvider {
         )),
       ) as _i5.Future<_i3.Response<_i2.ReservationDTO>>);
   @override
+  _i5.Future<_i3.Response<void>> deleteReservation(
+          {required String? reservationToken}) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #deleteReservation,
+          [],
+          {#reservationToken: reservationToken},
+        ),
+        returnValue: _i5.Future<_i3.Response<void>>.value(_FakeResponse_1<void>(
+          this,
+          Invocation.method(
+            #deleteReservation,
+            [],
+            {#reservationToken: reservationToken},
+          ),
+        )),
+      ) as _i5.Future<_i3.Response<void>>);
+  @override
   void addListener(_i7.VoidCallback? listener) => super.noSuchMethod(
         Invocation.method(
           #addListener,

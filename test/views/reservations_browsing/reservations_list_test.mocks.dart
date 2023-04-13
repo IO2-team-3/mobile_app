@@ -63,6 +63,22 @@ class MockReservationsStorageProvider extends _i1.Mock
         returnValueForMissingStub: _i3.Future<void>.value(),
       ) as _i3.Future<void>);
   @override
+  _i3.Future<void> removeReservation(
+    int? eventId,
+    int? placeId,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #removeReservation,
+          [
+            eventId,
+            placeId,
+          ],
+        ),
+        returnValue: _i3.Future<void>.value(),
+        returnValueForMissingStub: _i3.Future<void>.value(),
+      ) as _i3.Future<void>);
+  @override
   void addListener(_i5.VoidCallback? listener) => super.noSuchMethod(
         Invocation.method(
           #addListener,
