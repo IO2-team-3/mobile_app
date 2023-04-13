@@ -81,7 +81,6 @@ class _ReservationMakingState extends State<ReservationMaking> {
             placeSchemaImgProvider =
                 Image.asset('assets/img/placeholder.png').image;
           }
-
           final freePlaces = filterFreePlaces(event.places);
           return Column(
             children: [
