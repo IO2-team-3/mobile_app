@@ -38,4 +38,11 @@ class ReservationsStorageProvider extends ChangeNotifier {
         await File('$pathToResDir/$eventId-$placeId').create(recursive: true);
     reservationFile.writeAsString(jsonEncode(reservation.toJson()));
   }
+
+  Future<void> removeReservation(int eventId, int placeId) async {
+    final pathToResDir = await _localPath;
+    final reservationFile = File('$pathToResDir/$eventId-$placeId');
+    await reservationFile.delete();
+    notifyListeners();
+  }
 }

@@ -14,7 +14,7 @@ class ReservationsList extends StatelessWidget {
         title: const Text('Your reservations'),
       ),
       body: FutureBuilder<List<Reservation>>(
-        future: context.read<ReservationsStorageProvider>().readReservations(),
+        future: context.watch<ReservationsStorageProvider>().readReservations(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return const Center(

@@ -81,18 +81,20 @@ class _ReservationMakingState extends State<ReservationMaking> {
             placeSchemaImgProvider =
                 Image.asset('assets/img/placeholder.png').image;
           }
-
           final freePlaces = filterFreePlaces(event.places);
           return Column(
             children: [
-              SizedBox(
-                width: MediaQuery.of(context).size.width,
-                height: 200,
-                child: InteractiveViewer(
-                  minScale: 1.0,
-                  maxScale: 5,
-                  child: Image(
-                      image: placeSchemaImgProvider, fit: BoxFit.fitHeight),
+              Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  height: 200,
+                  child: InteractiveViewer(
+                    minScale: 1.0,
+                    maxScale: 5,
+                    child: Image(
+                        image: placeSchemaImgProvider, fit: BoxFit.fitHeight),
+                  ),
                 ),
               ),
               const SizedBox(
