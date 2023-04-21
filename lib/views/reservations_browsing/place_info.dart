@@ -11,14 +11,14 @@ class PlaceInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     ImageProvider placeSchemaImgProvider;
     final placeSchema = reservation.placeSchema;
-    if (placeSchema != null) {
+    if (placeSchema != null && placeSchema.isNotEmpty) {
       try {
         placeSchemaImgProvider = MemoryImage(
           base64Decode(
             base64.normalize(placeSchema),
           ),
         );
-      } on FormatException {
+      } catch (e) {
         placeSchemaImgProvider =
             Image.asset('assets/img/placeholder.png').image;
       }

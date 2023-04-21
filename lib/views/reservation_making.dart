@@ -69,11 +69,11 @@ class _ReservationMakingState extends State<ReservationMaking> {
           final EventWithPlaces event = snapshot.data!.data!;
           ImageProvider placeSchemaImgProvider;
           final placeSchema = event.placeSchema;
-          if (placeSchema != null) {
+          if (placeSchema != null && placeSchema.isNotEmpty) {
             try {
               placeSchemaImgProvider = MemoryImage(
                   base64Decode(base64.normalize(event.placeSchema!)));
-            } on FormatException {
+            } catch (e) {
               placeSchemaImgProvider =
                   Image.asset('assets/img/placeholder.png').image;
             }
