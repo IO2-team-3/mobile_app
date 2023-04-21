@@ -6,5 +6,5 @@ class ApiConfig {
     'team3':
         'http://io2central-env.eba-vfjwqcev.eu-north-1.elasticbeanstalk.com/'
   };
-  static String baseUrl = _apiUrls['team1']!;
+  static String baseUrl = _apiUrls['team3']!;
 }

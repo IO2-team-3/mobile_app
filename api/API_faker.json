@@ -762,15 +762,6 @@
             "type": "integer",
             "format": "int64",
             "example": 100
-          },
-          "placeSchema": {
-            "type": "string",
-            "example": "Seralized place schema",
-            "x-faker": {
-              "helpers.replaceSymbols": [
-                "iVBORw0KGgoAAAANSUhEUgAAAAgAAAAIAQMAAAD+wSzIAAAABlBMVEX///+/v7+jQ3Y5AAAADklEQVQI12P4AIX8EAgALgAD/aNpbtEAAAAASUVORK5CYII"
-              ]
-            }
           }
         }
       },
@@ -849,7 +840,12 @@
           },
           "placeSchema": {
             "type": "string",
-            "example": "Seralized place schema"
+            "example": "Seralized place schema",
+            "x-faker": {
+              "helpers.replaceSymbols": [
+                "iVBORw0KGgoAAAANSUhEUgAAAAgAAAAIAQMAAAD+wSzIAAAABlBMVEX///+/v7+jQ3Y5AAAADklEQVQI12P4AIX8EAgALgAD/aNpbtEAAAAASUVORK5CYII"
+              ]
+            }
           }
         }
       },
