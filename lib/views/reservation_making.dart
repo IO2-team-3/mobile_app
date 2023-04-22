@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:built_collection/built_collection.dart';
 import 'package:collection/collection.dart';
 import 'package:dio/dio.dart';
@@ -7,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:mobile_app/providers/api_provider.dart';
 import 'package:mobile_app/providers/events_cache_provider.dart';
 import 'package:mobile_app/providers/reservations_provider.dart';
+import 'package:mobile_app/utility/decode_base64.dart';
 import 'package:openapi/openapi.dart';
 import 'package:provider/provider.dart';
 
@@ -71,8 +70,8 @@ class _ReservationMakingState extends State<ReservationMaking> {
           final placeSchema = event.placeSchema;
           if (placeSchema != null && placeSchema.isNotEmpty) {
             try {
-              placeSchemaImgProvider = MemoryImage(
-                  base64Decode(base64.normalize(event.placeSchema!)));
+              placeSchemaImgProvider =
+                  MemoryImage(decodeBase64(event.placeSchema!));
             } catch (e) {
               placeSchemaImgProvider =
                   Image.asset('assets/img/placeholder.png').image;
