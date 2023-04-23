@@ -1,7 +1,6 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:mobile_app/models/reservation.dart';
+import 'package:mobile_app/utility/decode_base64.dart';
 
 class PlaceInfo extends StatelessWidget {
   final Reservation reservation;
@@ -11,14 +10,10 @@ class PlaceInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     ImageProvider placeSchemaImgProvider;
     final placeSchema = reservation.placeSchema;
-    if (placeSchema != null) {
+    if (placeSchema != null && placeSchema.isNotEmpty) {
       try {
-        placeSchemaImgProvider = MemoryImage(
-          base64Decode(
-            base64.normalize(placeSchema),
-          ),
-        );
-      } on FormatException {
+        placeSchemaImgProvider = MemoryImage(decodeBase64(placeSchema));
+      } catch (e) {
         placeSchemaImgProvider =
             Image.asset('assets/img/placeholder.png').image;
       }

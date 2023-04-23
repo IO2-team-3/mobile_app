@@ -45,8 +45,3 @@ lib/src/model/place.dart
 lib/src/model/reservation_dto.dart
 lib/src/serializers.dart
 pubspec.yaml
-test/event_form_test.dart
-test/event_patch_test.dart
-test/event_with_places_test.dart
-test/organizer_form_test.dart
-test/organizer_patch_test.dart

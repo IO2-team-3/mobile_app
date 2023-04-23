@@ -43,80 +43,85 @@ class EventDetails extends StatelessWidget {
         icon: const Icon(Icons.add),
         backgroundColor: Colors.amber,
       ),
-      body: Column(
-        children: [
-          Center(
-            child: Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Text(
-                event.name,
-                style: const TextStyle(
-                  fontSize: 20,
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Text(
+                  event.name,
+                  style: const TextStyle(
+                    fontSize: 20,
+                  ),
                 ),
               ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                      border: Border.all(
-                          color: const Color.fromARGB(255, 22, 180, 207)),
-                      borderRadius:
-                          const BorderRadius.all(Radius.circular(20))),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      children: [
-                        Text('Start date: $startDateStrYMMD'),
-                        Text(startDateStrHM),
-                      ],
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                        border: Border.all(
+                            color: const Color.fromARGB(255, 22, 180, 207)),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(20))),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        children: [
+                          Text('Start date: $startDateStrYMMD'),
+                          Text(startDateStrHM),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                      border: Border.all(
-                          color: const Color.fromARGB(255, 22, 180, 207)),
-                      borderRadius:
-                          const BorderRadius.all(Radius.circular(20))),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      children: [
-                        Text('End date: $endDateStrYMMD'),
-                        Text(endDateStrHM),
-                      ],
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 20),
+                    child: Container(
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                              color: const Color.fromARGB(255, 22, 180, 207)),
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(20))),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          children: [
+                            Text('End date: $endDateStrYMMD'),
+                            Text(endDateStrHM),
+                          ],
+                        ),
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          FutureBuilder<List<Placemark>>(
-            future: placemarkFromCoordinatesSafe(latitude, longitude),
-            builder: (context, snapshot) {
-              if (snapshot.hasError) {
-                addressNotFound = true;
-              }
-              if (!snapshot.hasData && !snapshot.hasError) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-              if (addressNotFound || snapshot.data!.isEmpty) {
-                return Text('(${event.longitude}, ${event.latitude})');
-              } else {
-                Placemark placemark = snapshot.data![0];
-                address = getAddressString(placemark);
-                return PlacemarkInfo(placemark: placemark);
-              }
-            },
-          ),
-        ],
+            FutureBuilder<List<Placemark>>(
+              future: placemarkFromCoordinatesSafe(latitude, longitude),
+              builder: (context, snapshot) {
+                if (snapshot.hasError) {
+                  addressNotFound = true;
+                }
+                if (!snapshot.hasData && !snapshot.hasError) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                if (addressNotFound || snapshot.data!.isEmpty) {
+                  return Text('(${event.longitude}, ${event.latitude})');
+                } else {
+                  Placemark placemark = snapshot.data![0];
+                  address = getAddressString(placemark);
+                  return PlacemarkInfo(placemark: placemark);
+                }
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
