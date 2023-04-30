@@ -5,6 +5,8 @@ import 'package:intl/intl.dart';
 import 'package:mobile_app/views/reservation_making.dart';
 import 'package:openapi/openapi.dart';
 
+import '../common/place_information.dart';
+
 class EventDetails extends StatelessWidget {
   final Event event;
   const EventDetails({super.key, required this.event});
@@ -78,22 +80,19 @@ class EventDetails extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 20),
-                    child: Container(
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                              color: const Color.fromARGB(255, 22, 180, 207)),
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(20))),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          children: [
-                            Text('End date: $endDateStrYMMD'),
-                            Text(endDateStrHM),
-                          ],
-                        ),
+                  Container(
+                    decoration: BoxDecoration(
+                        border: Border.all(
+                            color: const Color.fromARGB(255, 22, 180, 207)),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(20))),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        children: [
+                          Text('End date: $endDateStrYMMD'),
+                          Text(endDateStrHM),
+                        ],
                       ),
                     ),
                   ),
@@ -112,11 +111,22 @@ class EventDetails extends StatelessWidget {
                   );
                 }
                 if (addressNotFound || snapshot.data!.isEmpty) {
-                  return Text('(${event.longitude}, ${event.latitude})');
+                  return Padding(
+                    padding: const EdgeInsets.only(bottom: 20),
+                    child: PlaceInformation(
+                      addressWidget:
+                          Text('(${event.longitude}, ${event.latitude})'),
+                    ),
+                  );
                 } else {
                   Placemark placemark = snapshot.data![0];
                   address = getAddressString(placemark);
-                  return PlacemarkInfo(placemark: placemark);
+                  return Padding(
+                    padding: const EdgeInsets.only(bottom: 20),
+                    child: PlaceInformation(
+                      addressWidget: PlacemarkInfo(placemark: placemark),
+                    ),
+                  );
                 }
               },
             ),
