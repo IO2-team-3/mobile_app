@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:mobile_app/models/reservation.dart';
 import 'package:mobile_app/providers/api_provider.dart';
 import 'package:mobile_app/providers/reservations_provider.dart';
+import 'package:mobile_app/views/reservations_browsing/place_info.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
@@ -36,11 +37,8 @@ class ReservationDetails extends StatelessWidget {
             onPressed: () => Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => PlaceInformation(
-                  addressWidget: Text(
-                    reservation.address,
-                    overflow: TextOverflow.ellipsis,
-                  ),
+                builder: (context) => PlaceInfo(
+                  reservation: reservation,
                 ),
               ),
             ),

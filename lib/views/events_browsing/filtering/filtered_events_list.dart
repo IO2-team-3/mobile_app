@@ -79,6 +79,7 @@ class _FilteredEventListState extends State<FilteredEventList> {
 List<Event> filterEvents(List<Event> events, SearchQueryProvider query) {
   bool distanceSpecified = query.distanceInKm != null;
   var filtered = events
+      .where((event) => event.status == EventStatus.inFuture)
       .where((event) =>
           event.title.toLowerCase().contains(query.eventName.toLowerCase()) ||
           event.name.toLowerCase().contains(query.eventName.toLowerCase()))
