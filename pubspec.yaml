@@ -39,6 +39,7 @@ flutter:
   assets:
     - assets/api/
     - assets/img/slideshow/
-    - assets/img/layout/
+    - assets/img/layout/background.jpg
+    - assets/img/layout/interior-theater.jpg
     - assets/img/logo/
     - assets/img/placeholder.png

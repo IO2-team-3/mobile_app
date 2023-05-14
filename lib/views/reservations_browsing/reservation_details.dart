@@ -145,9 +145,9 @@ class ReservationDetails extends StatelessWidget {
       builder: (context) {
         return AlertDialog(
           title: const Text('Cancel reservation'),
-          content: SingleChildScrollView(
+          content: const SingleChildScrollView(
             child: ListBody(
-              children: const [
+              children: [
                 Text('You are about to cancel the reservation.'),
                 Text('Are you sure? This action cannot be reversed.'),
               ],

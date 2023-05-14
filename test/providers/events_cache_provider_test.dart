@@ -29,7 +29,10 @@ void main() {
       await cacheProvider.refreshAllEvents(false);
 
       expect(cacheProvider.allEvents!.data, eventsList);
-      expect(cacheProvider.lastFetchTime.isBefore(DateTime.now()), isTrue);
+      expect(
+          cacheProvider.lastFetchTime
+              .isBefore(DateTime.now().add(const Duration(microseconds: 1))),
+          isTrue);
     });
 
     test(
