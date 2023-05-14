@@ -6,5 +6,16 @@ class ApiConfig {
     'team3':
         'http://io2central-env.eba-vfjwqcev.eu-north-1.elasticbeanstalk.com/'
   };
-  static String baseUrl = _apiUrls['team3']!;
+  static const defaultServer = 'team3';
+
+  static Map<String, String> get apiUrls => _apiUrls;
+  static String _server = defaultServer;
+  static String get server => _server;
+  static set server(String? value) {
+    if (value != null) {
+      _server = value;
+    }
+  }
+
+  static String get baseUrl => _apiUrls[_server] ?? _apiUrls[defaultServer]!;
 }

@@ -9,6 +9,14 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('EventWave'),
+        actions: [
+          IconButton(
+            icon: const Icon(
+              Icons.settings_outlined,
+            ),
+            onPressed: () => Navigator.pushNamed(context, '/settings_page'),
+          )
+        ],
       ),
       body: Container(
         decoration: const BoxDecoration(
