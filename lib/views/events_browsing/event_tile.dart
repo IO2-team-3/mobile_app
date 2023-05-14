@@ -28,8 +28,6 @@ class EventTile extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
-                Text(event.status.name),
-                const SizedBox(width: 8),
                 TextButton(
                   child: const Text('LEARN MORE'),
                   onPressed: () {

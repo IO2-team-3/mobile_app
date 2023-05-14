@@ -56,7 +56,7 @@ class _EventsListState extends State<EventsList> {
               child: CircularProgressIndicator(),
             );
           }
-          var eventsList = snapshot.data!.data!;
+          var eventsList = _getInFutureEvents(snapshot.data!.data!);
           return ListView.builder(
             itemCount: eventsList.length,
             itemBuilder: (_, index) {
@@ -68,5 +68,11 @@ class _EventsListState extends State<EventsList> {
         },
       ),
     );
+  }
+
+  List<Event> _getInFutureEvents(BuiltList<Event> events) {
+    var filtered =
+        events.where((event) => event.status == EventStatus.inFuture);
+    return filtered.toList();
   }
 }

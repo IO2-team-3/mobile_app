@@ -40,6 +40,26 @@ void main() {
               ],
             ))
           .build(),
+      (EventBuilder()
+            ..id = 1
+            ..freePlace = 2
+            ..title = 'event-title2'
+            ..startTime = 123
+            ..endTime = 12342350
+            ..name = 'event-name2'
+            ..status = EventStatus.inFuture
+            ..longitude = '123.445'
+            ..latitude = '12.2235'
+            ..maxPlace = 100
+            ..categories = ListBuilder<Category>(
+              [
+                (CategoryBuilder()
+                      ..id = 1
+                      ..name = 'category-name')
+                    .build(),
+              ],
+            ))
+          .build(),
     ],
   ).build();
 
@@ -93,7 +113,9 @@ void main() {
       await widgetTester.pump();
 
       for (final event in eventsFromProvider) {
-        expect(find.text(event.title), findsOneWidget);
+        if (event.status == EventStatus.inFuture) {
+          expect(find.text(event.title), findsOneWidget);
+        }
       }
     });
   });

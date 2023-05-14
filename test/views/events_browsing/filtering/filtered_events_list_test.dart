@@ -54,7 +54,7 @@ void main() {
           ..startTime = 123
           ..endTime = 12342350
           ..name = 'event-name'
-          ..status = EventStatus.done
+          ..status = EventStatus.inFuture
           ..longitude = '5.0'
           ..latitude = '6.0'
           ..maxPlace = 10
@@ -71,7 +71,7 @@ void main() {
           ..startTime = 123
           ..endTime = 12342350
           ..name = 'event-name'
-          ..status = EventStatus.done
+          ..status = EventStatus.inFuture
           ..longitude = '6.0'
           ..latitude = '5.55'
           ..categories = ListBuilder<Category>(
@@ -88,6 +88,22 @@ void main() {
           ..startTime = 123
           ..endTime = 12342350
           ..name = 'event-name'
+          ..status = EventStatus.inFuture
+          ..longitude = '8.5'
+          ..latitude = '-5.0'
+          ..categories = ListBuilder<Category>(
+            [
+              categoriesById[2],
+            ],
+          ))
+        .build(),
+    (eventBuilder
+          ..id = 3
+          ..freePlace = 2
+          ..title = 'canceled-event'
+          ..startTime = 123
+          ..endTime = 12342350
+          ..name = 'calnceled-event-name'
           ..status = EventStatus.done
           ..longitude = '8.5'
           ..latitude = '-5.0'
@@ -228,7 +244,10 @@ void main() {
 
       List<Event> filtered =
           filterEvents(allEvents.toList(), mockSearchQueryProvider);
-      expect(const IterableEquality().equals(filtered, allEvents), true);
+      expect(
+          const IterableEquality().equals(filtered,
+              allEvents.where((e) => e.status == EventStatus.inFuture)),
+          true);
     });
 
     test('test filtering with by name', () {

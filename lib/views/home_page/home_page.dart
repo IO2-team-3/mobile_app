@@ -17,9 +17,9 @@ class HomePage extends StatelessWidget {
             fit: BoxFit.cover,
           ),
         ),
-        child: Column(
+        child: const Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
+          children: [
             Padding(
               padding: EdgeInsets.all(20.0),
               child: Carousel(),

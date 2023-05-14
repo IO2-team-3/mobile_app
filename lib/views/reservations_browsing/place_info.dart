@@ -25,35 +25,52 @@ class PlaceInfo extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Place info'),
       ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: SizedBox(
-              width: MediaQuery.of(context).size.width,
-              height: 200,
-              child: InteractiveViewer(
-                minScale: 1.0,
-                maxScale: 5.0,
-                child:
-                    Image(image: placeSchemaImgProvider, fit: BoxFit.fitHeight),
+      body: Card(
+        margin: const EdgeInsets.all(20),
+        clipBehavior: Clip.antiAlias,
+        child: Container(
+          decoration: const BoxDecoration(
+            color: Colors.black,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height / 3,
+                  child: InteractiveViewer(
+                    minScale: 1.0,
+                    maxScale: 5.0,
+                    child: Image(
+                      image: placeSchemaImgProvider,
+                      fit: BoxFit.fitHeight,
+                    ),
+                  ),
+                ),
               ),
-            ),
+              const SizedBox(
+                height: 20,
+              ),
+              const Text(
+                'Your place:',
+                style: TextStyle(
+                  color: Colors.amber,
+                  fontSize: 20.0,
+                ),
+              ),
+              Text(
+                'Place ${reservation.placeId}',
+              ),
+              const Spacer(),
+              SizedBox(
+                height: MediaQuery.of(context).size.height / 5,
+                child: Image.asset('assets/img/layout/interior-theater.jpg'),
+              ),
+            ],
           ),
-          const SizedBox(
-            height: 20,
-          ),
-          const Text(
-            'Your place:',
-            style: TextStyle(
-              color: Colors.amber,
-              fontSize: 20.0,
-            ),
-          ),
-          Text(
-            'Place ${reservation.placeId}',
-          ),
-        ],
+        ),
       ),
     );
   }
