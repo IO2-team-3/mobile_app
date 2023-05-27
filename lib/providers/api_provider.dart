@@ -48,16 +48,6 @@ class APIProvider extends provider.ChangeNotifier {
 
   Future<Response<BuiltList<String>>> listPhotosForEvent(
       {required int eventId}) async {
-    //return 'https://io2-central-photos.s3.amazonaws.com/' + api.getEventApi().getPhoto(id: eventId); // TODO
-    return Response(
-      requestOptions: RequestOptions(),
-      data: BuiltList.from(
-        List.generate(
-          3,
-          (_) =>
-              'https://io2-central-photos.s3.amazonaws.com/event/464/00201.jpg',
-        ),
-      ),
-    );
+    return api.getEventApi().getPhoto(id: eventId);
   }
 }

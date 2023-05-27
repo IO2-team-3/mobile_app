@@ -5,6 +5,8 @@ import 'package:flutter/services.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:intl/intl.dart';
 import 'package:mobile_app/providers/api_provider.dart';
+import 'package:mobile_app/services/api_config.dart';
+import 'package:mobile_app/views/common/image_widget.dart';
 import 'package:mobile_app/views/reservation_making.dart';
 import 'package:openapi/openapi.dart';
 import 'package:provider/provider.dart';
@@ -133,29 +135,26 @@ class EventDetails extends StatelessWidget {
               }
             },
           ),
-          FutureBuilder<Response<BuiltList<String>>>(
-            future: context.read<APIProvider>().listPhotosForEvent(
-                  eventId: event.id,
-                ),
-            builder: (context, snapshot) {
-              if (snapshot.hasError) {
-                return Container();
-              }
-              if (!snapshot.hasData) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-              var photos = snapshot.data!.data!;
-              debugPrint('itemCount = ${photos.length}');
-              return Expanded(
-                child: ListView.builder(
-                  itemCount: photos.length,
-                  itemBuilder: (_, index) => Image.network(photos[index]),
-                ),
-              );
-            },
-          ),
+          if (ApiConfig.server == 'team3')
+            FutureBuilder<Response<BuiltList<String>>>(
+              future: context.read<APIProvider>().listPhotosForEvent(
+                    eventId: event.id,
+                  ),
+              builder: (context, snapshot) {
+                if (snapshot.hasError) {
+                  return Container();
+                }
+                if (!snapshot.hasData) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                var photos = snapshot.data!.data!
+                    .map((s3path) => ApiConfig.s3url + s3path)
+                    .toList();
+                return Expanded(child: PhotosGrid(urls: photos));
+              },
+            ),
         ],
       ),
     );
