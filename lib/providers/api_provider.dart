@@ -45,4 +45,9 @@ class APIProvider extends provider.ChangeNotifier {
         .getReservationApi()
         .deleteReservation(reservationToken: reservationToken);
   }
+
+  Future<Response<BuiltList<String>>> listPhotosForEvent(
+      {required int eventId}) async {
+    return api.getEventApi().getPhoto(id: eventId);
+  }
 }

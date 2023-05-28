@@ -1,9 +1,15 @@
+import 'package:built_collection/built_collection.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:intl/intl.dart';
+import 'package:mobile_app/providers/api_provider.dart';
+import 'package:mobile_app/services/api_config.dart';
+import 'package:mobile_app/views/common/image_widget.dart';
 import 'package:mobile_app/views/reservation_making.dart';
 import 'package:openapi/openapi.dart';
+import 'package:provider/provider.dart';
 
 import '../common/place_information.dart';
 
@@ -45,93 +51,111 @@ class EventDetails extends StatelessWidget {
         icon: const Icon(Icons.add),
         backgroundColor: Colors.amber,
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Center(
-              child: Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Text(
-                  event.name,
-                  style: const TextStyle(
-                    fontSize: 20,
-                  ),
+      body: Column(
+        children: [
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Text(
+                event.name,
+                style: const TextStyle(
+                  fontSize: 20,
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                        border: Border.all(
-                            color: const Color.fromARGB(255, 22, 180, 207)),
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(20))),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        children: [
-                          Text('Start date: $startDateStrYMMD'),
-                          Text(startDateStrHM),
-                        ],
-                      ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                      border: Border.all(
+                          color: const Color.fromARGB(255, 22, 180, 207)),
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(20))),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      children: [
+                        Text('Start date: $startDateStrYMMD'),
+                        Text(startDateStrHM),
+                      ],
                     ),
                   ),
-                  Container(
-                    decoration: BoxDecoration(
-                        border: Border.all(
-                            color: const Color.fromARGB(255, 22, 180, 207)),
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(20))),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        children: [
-                          Text('End date: $endDateStrYMMD'),
-                          Text(endDateStrHM),
-                        ],
-                      ),
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                      border: Border.all(
+                          color: const Color.fromARGB(255, 22, 180, 207)),
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(20))),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      children: [
+                        Text('End date: $endDateStrYMMD'),
+                        Text(endDateStrHM),
+                      ],
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-            FutureBuilder<List<Placemark>>(
-              future: placemarkFromCoordinatesSafe(latitude, longitude),
+          ),
+          FutureBuilder<List<Placemark>>(
+            future: placemarkFromCoordinatesSafe(latitude, longitude),
+            builder: (context, snapshot) {
+              if (snapshot.hasError) {
+                addressNotFound = true;
+              }
+              if (!snapshot.hasData && !snapshot.hasError) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              if (addressNotFound || snapshot.data!.isEmpty) {
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: 20),
+                  child: PlaceInformation(
+                    addressWidget:
+                        Text('(${event.longitude}, ${event.latitude})'),
+                  ),
+                );
+              } else {
+                Placemark placemark = snapshot.data![0];
+                address = getAddressString(placemark);
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: 20),
+                  child: PlaceInformation(
+                    addressWidget: PlacemarkInfo(placemark: placemark),
+                  ),
+                );
+              }
+            },
+          ),
+          if (ApiConfig.server == 'team3')
+            FutureBuilder<Response<BuiltList<String>>>(
+              future: context.read<APIProvider>().listPhotosForEvent(
+                    eventId: event.id,
+                  ),
               builder: (context, snapshot) {
                 if (snapshot.hasError) {
-                  addressNotFound = true;
+                  return Container();
                 }
-                if (!snapshot.hasData && !snapshot.hasError) {
+                if (!snapshot.hasData) {
                   return const Center(
                     child: CircularProgressIndicator(),
                   );
                 }
-                if (addressNotFound || snapshot.data!.isEmpty) {
-                  return Padding(
-                    padding: const EdgeInsets.only(bottom: 20),
-                    child: PlaceInformation(
-                      addressWidget:
-                          Text('(${event.longitude}, ${event.latitude})'),
-                    ),
-                  );
-                } else {
-                  Placemark placemark = snapshot.data![0];
-                  address = getAddressString(placemark);
-                  return Padding(
-                    padding: const EdgeInsets.only(bottom: 20),
-                    child: PlaceInformation(
-                      addressWidget: PlacemarkInfo(placemark: placemark),
-                    ),
-                  );
-                }
+                var photos = snapshot.data!.data!
+                    .map((s3path) => ApiConfig.s3url + s3path)
+                    .toList();
+                return Expanded(child: PhotosGrid(urls: photos));
               },
             ),
-          ],
-        ),
+        ],
       ),
     );
   }

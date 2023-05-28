@@ -11,11 +11,14 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**addEvent**](EventApi.md#addevent) | **POST** /events | Add new event
 [**cancelEvent**](EventApi.md#cancelevent) | **DELETE** /events/{id} | Cancel event
+[**deletePhoto**](EventApi.md#deletephoto) | **DELETE** /events/{id}/photos | Cancel event
 [**getByCategory**](EventApi.md#getbycategory) | **GET** /events/getByCategory | Return list of all events in category
 [**getEventById**](EventApi.md#geteventbyid) | **GET** /events/{id} | Find event by ID
 [**getEvents**](EventApi.md#getevents) | **GET** /events | Return list of all events
 [**getMyEvents**](EventApi.md#getmyevents) | **GET** /events/my | Return list of events made by organizer, according to session
+[**getPhoto**](EventApi.md#getphoto) | **GET** /events/{id}/photos | Get list of photo of event
 [**patchEvent**](EventApi.md#patchevent) | **PATCH** /events/{id} | patch existing event
+[**putPhoto**](EventApi.md#putphoto) | **POST** /events/{id}/photos | patch existing event
 
 
 # **addEvent**
@@ -91,6 +94,52 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **String**| id of Event | 
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+[token](../README.md#token)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **deletePhoto**
+> deletePhoto(id, path)
+
+Cancel event
+
+### Example
+```dart
+import 'package:openapi/api.dart';
+// TODO Configure API key authorization: token
+//defaultApiClient.getAuthentication<ApiKeyAuth>('token').apiKey = 'YOUR_API_KEY';
+// uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+//defaultApiClient.getAuthentication<ApiKeyAuth>('token').apiKeyPrefix = 'Bearer';
+
+final api = Openapi().getEventApi();
+final String id = id_example; // String | id of Event
+final String path = path_example; // String | path of photo
+
+try {
+    api.deletePhoto(id, path);
+} catch on DioError (e) {
+    print('Exception when calling EventApi->deletePhoto: $e\n');
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **String**| id of Event | 
+ **path** | **String**| path of photo | 
 
 ### Return type
 
@@ -269,6 +318,49 @@ This endpoint does not need any parameter.
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **getPhoto**
+> BuiltList<String> getPhoto(id)
+
+Get list of photo of event
+
+Returns a list of photo paths
+
+### Example
+```dart
+import 'package:openapi/api.dart';
+
+final api = Openapi().getEventApi();
+final int id = 789; // int | ID of event to return
+
+try {
+    final response = api.getPhoto(id);
+    print(response);
+} catch on DioError (e) {
+    print('Exception when calling EventApi->getPhoto: $e\n');
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **int**| ID of event to return | 
+
+### Return type
+
+**BuiltList&lt;String&gt;**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **patchEvent**
 > patchEvent(id, eventPatch)
 
@@ -311,6 +403,52 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: application/json
+ - **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **putPhoto**
+> putPhoto(id, path)
+
+patch existing event
+
+### Example
+```dart
+import 'package:openapi/api.dart';
+// TODO Configure API key authorization: token
+//defaultApiClient.getAuthentication<ApiKeyAuth>('token').apiKey = 'YOUR_API_KEY';
+// uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+//defaultApiClient.getAuthentication<ApiKeyAuth>('token').apiKeyPrefix = 'Bearer';
+
+final api = Openapi().getEventApi();
+final String id = id_example; // String | id of Event
+final String path = path_example; // String | path of photo
+
+try {
+    api.putPhoto(id, path);
+} catch on DioError (e) {
+    print('Exception when calling EventApi->putPhoto: $e\n');
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **String**| id of Event | 
+ **path** | **String**| path of photo | 
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+[token](../README.md#token)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
  - **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

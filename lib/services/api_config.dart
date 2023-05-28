@@ -18,4 +18,7 @@ class ApiConfig {
   }
 
   static String get baseUrl => _apiUrls[_server] ?? _apiUrls[defaultServer]!;
+
+  static const s3url =
+      ''; //'https://io2-central-photos.s3.amazonaws.com/'; // unused
 }
