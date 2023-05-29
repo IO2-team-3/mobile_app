@@ -1,5 +1,5 @@
 name: mobile_app
-description: A new Flutter project.
+description: Revolutionary booking and event system.
 publish_to: 'none'
 version: 0.1.0
 
@@ -26,6 +26,7 @@ dependencies:
   qr_flutter: ^4.0.0
   shared_preferences: ^2.1.1
   restart_app: ^1.1.2
+  flutter_launcher_icons: ^0.13.1
 
 dev_dependencies:
   flutter_test:
